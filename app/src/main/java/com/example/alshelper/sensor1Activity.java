@@ -1,8 +1,12 @@
 package com.example.alshelper;
 
+/*############
+#  IMPORTS   #
+##############*/
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Rect;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,7 +15,9 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 public class sensor1Activity extends AppCompatActivity {
-
+/*##################
+# STATIC VARIABLES #
+####################*/
     static final int SEEK_BAR_HIGH_RANGE = 100;
 
     static final int SEEK_BAR_MEDIUM_RANGE = 50;
@@ -22,7 +28,17 @@ public class sensor1Activity extends AppCompatActivity {
 
     static int currentRange = SEEK_BAR_MEDIUM_RANGE;
 
-    public void identifyLevelRange(int level){
+/*############
+#  METHODS   #
+##############*/
+
+    public void identifyLevelRange(int level)
+    /*
+    this function get level number(1-3) and
+    return the fit range for this level
+    an error will return when the level is invalid
+    */
+    {
         switch (level){
             case 1:
                 currentRange = SEEK_BAR_LOW_RANGE;
@@ -38,7 +54,13 @@ public class sensor1Activity extends AppCompatActivity {
         }
     }
 
-    public void changeLevel(View view){
+    public void changeLevel(View view)
+    /*
+    this function called when UPPER/LOWER LEVEL button clicked
+    ++/-- the level and then restart
+    in case of edge level return TOAST
+    */
+    {
         if (view.getId() == R.id.levelUp & currentLevel < 3){
             currentLevel++;
             identifyLevelRange(currentLevel);
@@ -49,37 +71,48 @@ public class sensor1Activity extends AppCompatActivity {
         }
         else {
             Toast.makeText(getApplicationContext(),"You are already in the edge level",Toast.LENGTH_SHORT).show();
+            return;
         }
-        SeekBar horizenBar = (SeekBar) findViewById(R.id.horizenSeekBar);
-        SeekBar verticalBar = (SeekBar) findViewById(R.id.verticalSeekBar);
+        View restart = (View) findViewById(R.id.restatButton);
+        restartSeek(restart);
         Log.i("change level","change level");
-        horizenBar.setMax(currentRange);
-        verticalBar.setMax(currentRange);
-        horizenBar.setProgress(currentRange/2);
-        verticalBar.setProgress(currentRange/2);
     }
 
-    public void onStopTracking(SeekBar seekBar, boolean hDirect){
+    public void onStopTracking(SeekBar seekBar, boolean hDirect)
+    /*
+    this function move the dot by animate function + check if the current dot place is valid/"win" place
+    */
+    {
         int moveSteps = currentRange/2-seekBar.getProgress();
-        int location;
+        float location;
         ImageView dot = (ImageView) findViewById(R.id.dot);
-
-        Rect myViewRect = new Rect();
-        dot.getGlobalVisibleRect(myViewRect);
+        ImageView axis = (ImageView) findViewById(R.id.xyAxis);
+        ImageView target = (ImageView) findViewById(R.id.target);
+        float targetWidth = target.getWidth();
+        float targetHeight = target.getHeight();
+        float endOfTargetX = target.getX() + targetWidth;
+        float endOfTargetY = target.getY() + targetHeight;
+        float axisWidth = axis.getWidth();
         if (hDirect){
-            location = myViewRect.left;;
+            location = dot.getX() + dot.getWidth()/2;
         }
         else{
-            location = myViewRect.top;
+            location = dot.getY() + dot.getHeight()/2;
         }
-        Log.i("the dot placed on" , Integer.toString(location));
 
-        if (location + moveSteps > 0){
+        if (location + moveSteps > 0 & location + moveSteps < axisWidth){
             if(hDirect){
                 dot.animate().translationXBy(moveSteps);
             }
             else {
                 dot.animate().translationYBy(moveSteps);
+            }
+            float dotX = dot.getX() + dot.getWidth()/2;
+            float dotY = dot.getY() + dot.getHeight()/2;
+            Log.i("the dot placed on" , " x: " + dotX + " y:" + dotY);
+            if ((dotX > target.getX() & dotX < endOfTargetX) & (dotY > target.getY() & dotY < endOfTargetY)){
+                final MediaPlayer win = MediaPlayer.create(this, R.raw.win);
+                win.start();
             }
         }
         else{
@@ -87,35 +120,49 @@ public class sensor1Activity extends AppCompatActivity {
         }
     }
 
-    public void restartSeek(View view){
+    public void restartSeek(View view)
+    /*
+    called by click on restart button or called by
+    changeLevel function, this function reset all
+    parameters of this Activity(except of level)
+    */
+    {
+        ImageView axis = (ImageView) findViewById(R.id.xyAxis);
+        ImageView dot = (ImageView) findViewById(R.id.dot);
+        float axisCenterX = axis.getX() + axis.getWidth()/2;
+        float axisCenterY = axis.getY() + axis.getHeight()/2;
+        float dotWidth = dot.getWidth()/2;
+        float dotHeight = dot.getHeight()/2;
+        dot.animate().x(axisCenterX-dotWidth).y(axisCenterY-dotHeight);
         SeekBar horizenBar = (SeekBar) findViewById(R.id.horizenSeekBar);
         SeekBar verticalBar = (SeekBar) findViewById(R.id.verticalSeekBar);
+        horizenBar.setMax(currentRange);
+        verticalBar.setMax(currentRange);
         horizenBar.setProgress(currentRange/2);
         verticalBar.setProgress(currentRange/2);
+
+        float width = axis.getWidth();
+        float height = axis.getHeight();
+
+        Log.i("the dot placed on" , width + " height " + height + " center " + axisCenterX + "  " + axisCenterY);
+
     }
+
+/*##############
+#  ON-CREATE() #
+################*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensor1);
 
-        ImageView axis = (ImageView) findViewById(R.id.xyAxis);
-        Rect myViewRect = new Rect();
-        axis.getGlobalVisibleRect(myViewRect);
-        int x = myViewRect.left;
-        int y = myViewRect.top;
-
-        int width = axis.getDrawable().getIntrinsicWidth();
-        int height = axis.getDrawable().getIntrinsicHeight();
-
-        Log.i("the dot placed on" , Integer.toString(width) + " height " + Integer.toString(height) + " center " + Integer.toString(x) + "  " + Integer.toString(y));
-
+        //initialize the seekbars + level
         SeekBar horizenBar = (SeekBar) findViewById(R.id.horizenSeekBar);
         SeekBar verticalBar = (SeekBar) findViewById(R.id.verticalSeekBar);
 
         currentRange = SEEK_BAR_MEDIUM_RANGE;
         horizenBar.setMax(currentRange);
         verticalBar.setMax(currentRange);
-
         horizenBar.setProgress(currentRange/2);
         verticalBar.setProgress(currentRange/2);
 

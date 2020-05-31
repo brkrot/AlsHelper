@@ -7,99 +7,123 @@
     tools:context=".sensor1Activity">
 
     <ImageView
-    android:id="@+id/imageView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@drawable/black"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="1.0"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.0"
-    app:srcCompat="@drawable/black" />
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/black" />
 
     <Button
-    android:id="@+id/levelUp"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="16dp"
-    android:layout_marginEnd="32dp"
-    android:layout_marginRight="32dp"
-    android:onClick="changeLevel"
-    android:text="UPER LEVEL"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/levelUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:onClick="changeLevel"
+        android:text="UPER LEVEL"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-    android:id="@+id/levelDown"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="32dp"
-    android:layout_marginLeft="32dp"
-    android:layout_marginTop="16dp"
-    android:onClick="changeLevel"
-    android:text="LOWER LEVEL"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/levelDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:onClick="changeLevel"
+        android:text="LOWER LEVEL"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-    android:id="@+id/restatButton"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="16dp"
-    android:gravity="center_horizontal"
-    android:onClick="restartSeek"
-    android:text="RESTART"
-    app:layout_constraintEnd_toStartOf="@+id/levelUp"
-    app:layout_constraintHorizontal_bias="0.501"
-    app:layout_constraintStart_toEndOf="@+id/levelDown"
-    app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/restatButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center_horizontal"
+        android:onClick="restartSeek"
+        android:text="RESTART"
+        app:layout_constraintEnd_toStartOf="@+id/levelUp"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toEndOf="@+id/levelDown"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <SeekBar
-    android:id="@+id/verticalSeekBar"
-    android:layout_width="100dp"
-    android:layout_height="78dp"
-    android:layout_marginBottom="28dp"
-    android:rotation="270"
-    android:scrollbarSize="10dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toStartOf="@+id/imageView"
-    app:layout_constraintHorizontal_bias="0.5"
-    app:layout_constraintStart_toEndOf="@+id/imageView" />
+        android:id="@+id/verticalSeekBar"
+        android:layout_width="100dp"
+        android:layout_height="78dp"
+        android:layout_marginBottom="28dp"
+        android:rotation="270"
+        android:scrollbarSize="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView" />
 
     <SeekBar
-    android:id="@+id/horizenSeekBar"
-    android:layout_width="100dp"
-    android:layout_height="78dp"
-    android:layout_marginBottom="28dp"
-    android:scrollbarSize="10dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toStartOf="@+id/imageView"
-    app:layout_constraintHorizontal_bias="0.5"
-    app:layout_constraintStart_toEndOf="@+id/imageView" />
+        android:id="@+id/horizenSeekBar"
+        android:layout_width="100dp"
+        android:layout_height="78dp"
+        android:layout_marginBottom="28dp"
+        android:scrollbarSize="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView" />
 
-    <ImageView
-    android:id="@+id/xyAxis"
-    android:layout_width="417dp"
-    android:layout_height="470dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.5"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:srcCompat="@drawable/xyaxis" />
+    <com.example.alshelper.DynamicSquareLayout
+        android:layout_width="match_parent"
+        android:layout_height="405dp"
+        app:layout_constraintBottom_toTopOf="@+id/verticalSeekBar"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/levelDown"
+        app:layout_constraintVertical_bias="0.525">
 
-    <ImageView
-    android:id="@+id/dot"
-    android:layout_width="20dp"
-    android:layout_height="22dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.5"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:srcCompat="@drawable/goldcoin" />
+        <ImageView
+            android:id="@+id/xyAxis"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/xyaxis"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/xyaxis" />
+
+        <ImageView
+            android:id="@+id/target"
+            android:layout_width="48dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginRight="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/target"
+            tools:layout_editor_absoluteY="362dp" />
+
+        <ImageView
+            android:id="@+id/dot"
+            android:layout_width="20dp"
+            android:layout_height="22dp"
+            app:layout_constraintBottom_toTopOf="@+id/xyAxis"
+            app:layout_constraintEnd_toStartOf="@+id/xyAxis"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/xyAxis"
+            app:layout_constraintTop_toBottomOf="@+id/xyAxis"
+            app:srcCompat="@drawable/goldcoin" />
+    </com.example.alshelper.DynamicSquareLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
