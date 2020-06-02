@@ -111,7 +111,7 @@ public class sensor1Activity extends AppCompatActivity {
             float dotY = dot.getY() + dot.getHeight()/2;
             Log.i("the dot placed on" , " x: " + dotX + " y:" + dotY);
             if ((dotX > target.getX() & dotX < endOfTargetX) & (dotY > target.getY() & dotY < endOfTargetY)){
-                final MediaPlayer win = MediaPlayer.create(this, R.raw.win);
+                final MediaPlayer win = MediaPlayer.create(this, R.raw.hit_the_target);
                 win.start();
             }
         }
