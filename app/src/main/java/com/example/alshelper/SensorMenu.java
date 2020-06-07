@@ -26,6 +26,11 @@ public class SensorMenu extends AppCompatActivity {
                 startActivity(intent);
 
                 break;
+            case "4":
+                intent = new Intent(this, NewJoystick.class);
+                startActivity(intent);
+
+                break;
             default:
 
         }

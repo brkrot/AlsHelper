@@ -43,7 +43,7 @@ public class PairedDevicesList extends AppCompatActivity {
             //Show a mensag. that the device has no bluetooth adapter
             Toast.makeText(getApplicationContext(), "Bluetooth Device Not found", Toast.LENGTH_LONG).show();
 
-            //finish(); todo ??
+            //finish();
         }else if(!myBluetooth.isEnabled())
         {
             //Ask to the user turn the bluetooth on

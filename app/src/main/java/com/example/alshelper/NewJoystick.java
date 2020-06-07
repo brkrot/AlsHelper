@@ -1,33 +1,29 @@
 package com.example.alshelper;
 
-import android.app.Activity;
-import android.bluetooth.BluetoothSocket;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.UUID;
+import java.util.regex.Pattern;
 
-
-public class JoystickSensor extends Activity {
+public class NewJoystick extends AppCompatActivity {
 
     BroadcastReceiver receiver = null;
+    TextView locationTextView;
 
-    private TextView outputTextView;
-
+    private int[] pos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_joystick_sensor);
-        outputTextView = (TextView)findViewById(R.id.outputTextView);
+        setContentView(R.layout.activity_new_joystick);
+
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -35,7 +31,6 @@ public class JoystickSensor extends Activity {
                 if (!intent.getAction().equals("broadcast_data_from_bluetooth")) return;
                 String data = intent.getStringExtra("incoming");
                 if (data == null) return;
-
                 drawOnUi(data);
             }
         };
@@ -43,6 +38,7 @@ public class JoystickSensor extends Activity {
         // here in onCreate()
         registerReceiver(receiver, new IntentFilter("broadcast_data_from_bluetooth"));
 
+        locationTextView = findViewById(R.id.locationTextView);
         findViewById(R.id.startButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,16 +47,31 @@ public class JoystickSensor extends Activity {
             }
         });
 
-        findViewById(R.id.stopButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                outputTextView.setText("");
-                AppBase.INSTANCE.bluetoothConnector.stopReadingData();
-            }
-        });
     }
 
+    /**
+     * drawOnUi:
+     * The function Draw the point image on the axis by the arduino joystick info
+     * The Info is being sent every (!)READING_DATA_GAP in BlueToothAdapter ( now equals  to 300) ms
+     * @param data is a string with the data from the Arduino
+     */
     private void drawOnUi(String data){
-        outputTextView.setText(data);
+
+        //Log.i("tag",String.valueOf(pos[0])+"\n"+String.valueOf(pos[1]));
+        parseData(data);
+        locationTextView.setText("X="+String.valueOf(pos[0])+"\n"+"Y="+String.valueOf(pos[1]));
     }
+
+    /**
+     *function get the data and parse it to integers array
+     * @param data
+     */
+    private void parseData(String data) {
+        String[] textStr = data.split("#");
+        pos = new int[textStr.length];
+        for (int i = 0; i < textStr.length-1; i++) {
+            pos[i] = Integer.parseInt(textStr[i]);
+        }
+    }
+
 }

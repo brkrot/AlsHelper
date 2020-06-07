@@ -18,12 +18,16 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class BluetoothConnector {
 
+    private final static int BUFFER_SIZE = 256;
+
+    private final static int READING_DATA_GAP = 300;
+
     Context context;
 
-    // todo barak 2 - executor
+    // todo LEARN - executor
     private ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    // todo barak 3 - atomic boolean
+    // todo LEARN - atomic boolean
     private AtomicBoolean isReadingData = new AtomicBoolean(false);
 
     /*private*//*todo is it sould be public? what indicator do i have to bluetooth connection?*/
@@ -32,8 +36,6 @@ public class BluetoothConnector {
     private final String address;
 
     private BluetoothAdapter myBluetooth = null;
-
-    //public/ boolean isBtConnected = false;
 
     private final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
@@ -81,7 +83,7 @@ public class BluetoothConnector {
 
         if (isReadingData.get() != true) {
             try {
-                inputStream.close(); // todo catch exceptions ...
+                inputStream.close(); // todo ERR catch exceptions ...
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -89,7 +91,7 @@ public class BluetoothConnector {
         }
 
         try {
-            byte[] buffer = new byte[256];
+            byte[] buffer = new byte[BUFFER_SIZE];
             if (inputStream.available() > 0) {
                 inputStream.read(buffer);
                 int i;
@@ -107,7 +109,7 @@ public class BluetoothConnector {
         sendDataBroadcast(incomingData);
 
         try {
-            Thread.sleep(300);//todo change the numbers to parameters
+            Thread.sleep(READING_DATA_GAP);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -115,7 +117,7 @@ public class BluetoothConnector {
     }
 
     /*----------------------------------------------------------------------*/
-    // todo barak 1 - broadcasts and receivers
+    // todo LEARN- broadcasts and receivers
     /*Broadcast to the world*/
     private void sendDataBroadcast(String data) {
         Intent intent = new Intent();
@@ -127,7 +129,7 @@ public class BluetoothConnector {
     /*----------------------------------------------------------------------*/
     public void stopReadingData() {
         isReadingData.set(false);
-        writeToArduino("S0");
+       // writeToArduino("S0");
     }
 
     /*----------------------------------------------------------------------*/
@@ -173,7 +175,7 @@ public class BluetoothConnector {
         /*----------------------------------------------------------------------*/
         @Override
         protected void onPreExecute() {
-            msg("Connecting...", 1);//todo progress bar
+            msg("Connecting...", 1);//todo -  progress bar
             //ProgressDialog progress = ProgressDialog.show(context, "Connecting...", "Please wait!!!");  //show a progress dialog
         }
 
@@ -229,7 +231,7 @@ public class BluetoothConnector {
             try {
                 btSocket.close();
                 AppBase.INSTANCE.isBluetoothConnected=false;
-                //todo make this toast to work - msg("Disconnected", 1);
+                msg("Disconnected", 1);
             } catch (IOException e) {
 
                 e.printStackTrace();
@@ -242,191 +244,3 @@ public class BluetoothConnector {
         }
     }
 }
-
-
-
-
-/*
-
-public class BluetoothConnector {
-
-    private final Context context;
-
-    private final String address;
-
-    private boolean isBtConnected = false;
-
-    private final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-
-    private BluetoothAdapter myBluetooth = null;
-
-    */
-/*private*//*
-public BluetoothSocket btSocket = null;
-
-
-    private InputStream in;
-
-    private OutputStream out;
-
-    private String strInput;
-
-    //Ctor
-    public BluetoothConnector(Context context, String address) {
-        this.context = context;
-        this.address = address;
-       ConnectBT();
-    }
-
-    public void ConnectBT(){
-        new ConnectBT().execute(); //Call the class to connect
-    }
-
-    //Reading some data from the arduino
-    public void readInput(){
-        ReadInput mReadThread = new ReadInput();
-    }
-
-    //Writing some data out to the arduino
-    public void writeToArduino(String s){
-        if (btSocket!=null)
-        {
-            try
-            {
-                btSocket.getOutputStream().writeToArduino(s.getBytes());
-            }
-            catch (IOException e)
-            {
-                msg("Error",1);
-            }
-        }
-
-    }
-
-    public void Disconnect()
-    {
-        if (btSocket!=null) //If the btSocket is busy
-        {
-            try
-            {
-                btSocket.close(); //close connection
-                msg("Disconnected",1);
-            }
-            catch (IOException e)
-            { msg("Error",1);}
-        }
-    }
-
-
-    //An easy way to make Toasts messsages
-    private void msg(String s,int l)
-    {
-        if(l==1){
-            Toast.makeText(context,s,Toast.LENGTH_LONG).show();
-        }
-        else{
-            Toast.makeText(context,s,Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-    private class ConnectBT extends AsyncTask<Void, Void, Void>  // UI thread
-    {
-        private boolean ConnectSuccess = true; //if it's here, it's almost connected
-
-        @Override
-        protected void onPreExecute()
-        {
-            msg("Connecting...",1);
-            // progress = ProgressDialog.show(PairedDevicesList.this, "Connecting...", "Please wait!!!");  //show a progress dialog
-        }
-
-        @Override
-        protected Void doInBackground(Void... devices) //while the progress dialog is shown, the connection is done in background
-        {
-            try
-            {
-                if (btSocket == null || !isBtConnected)
-                {
-                    myBluetooth = BluetoothAdapter.getDefaultAdapter();//get the mobile bluetooth device
-                    BluetoothDevice dispositivo = myBluetooth.getRemoteDevice(address);//connects to the device's address and checks if it's available
-                    btSocket = dispositivo.createInsecureRfcommSocketToServiceRecord(myUUID);//create a RFCOMM (SPP) connection
-                    BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
-                    btSocket.connect();//start connection
-                }
-            }
-            catch (IOException e)
-            {
-                ConnectSuccess = false;//if the try failed, you can check the exception here
-            }
-            return null;
-        }
-        @Override
-        protected void onPostExecute(Void result) //after the doInBackground, it checks if everything went fine
-        {
-            super.onPostExecute(result);
-
-            if (!ConnectSuccess)
-            {
-                msg("Connection Failed :( \n Try again.",1);
-
-            }
-            else
-            {
-                msg("Connected.",1);
-                isBtConnected = true;
-            }
-            //progress.dismiss();
-        }
-    }
-
-    private class ReadInput implements Runnable {
-
-        private boolean bStop = false;
-        private Thread t;
-
-        public ReadInput() {
-            t = new Thread(this, "Input Thread");
-            t.start();
-        }
-
-        public boolean isRunning() {
-            return t.isAlive();
-        }
-
-        @Override
-        public void run() {
-            InputStream inputStream;
-
-            try {
-                inputStream = btSocket.getInputStream();
-                while (!bStop) {
-                    byte[] buffer = new byte[256];
-                    if (inputStream.available() > 0) {
-                        inputStream.read(buffer);
-                        int i = 0;
-                        */
-/*
- * This is needed because new String(buffer) is taking the entire buffer i.e. 256 chars on Android 2.3.4 http://stackoverflow.com/a/8843462/1287554
- *//*
-
-                        for (i = 0; i < buffer.length && buffer[i] != 0; i++) {
-                        }
-
-                        String tempStr = new String(buffer, 0, i);
-                        strInput =   tempStr;
-                    }
-                }
-                Thread.sleep(500);
-            } catch (Exception e) {
-
-                e.printStackTrace();
-            }
-
-        }
-    }
-
-}
-
-
-*/
