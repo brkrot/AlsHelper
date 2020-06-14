@@ -7,53 +7,189 @@
     android:orientation="vertical"
     tools:context=".JoystickSensor">
 
-    <TextView
-        android:id="@+id/outputTextView"
-        android:layout_width="251dp"
-        android:layout_height="151dp"
-        android:layout_marginTop="76dp"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="TextView"
-        android:textSize="36sp"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/black"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/black" />
+
+    <Button
+        android:id="@+id/levelUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:onClick="changeLevel"
+        android:text="UPER LEVEL"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/levelDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:onClick="changeLevel"
+        android:text="LOWER LEVEL"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/startButton"
-        android:layout_width="142dp"
-        android:layout_height="72dp"
-        android:layout_marginTop="64dp"
-        android:text="start"
-        android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/restatButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center_horizontal"
+        android:onClick="restartSeek"
+        android:text="RESTART"
+        app:layout_constraintEnd_toStartOf="@+id/levelUp"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toEndOf="@+id/levelDown"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <SeekBar
+        android:id="@+id/verticalSeekBar"
+        android:layout_width="100dp"
+        android:layout_height="78dp"
+        android:layout_marginBottom="28dp"
+        android:rotation="270"
+        android:scrollbarSize="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/outputTextView" />
+        app:layout_constraintStart_toEndOf="@+id/imageView" />
+
+    <SeekBar
+        android:id="@+id/horizenSeekBar"
+        android:layout_width="100dp"
+        android:layout_height="78dp"
+        android:layout_marginBottom="28dp"
+        android:scrollbarSize="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.741"
+        app:layout_constraintStart_toEndOf="@+id/imageView" />
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="77dp"
+        android:layout_height="39dp"
+        android:text="start"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/outputTextView"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toEndOf="@+id/outputTextView"
+        app:layout_constraintTop_toBottomOf="@+id/restatButton" />
 
     <Button
         android:id="@+id/stopButton"
-        android:layout_width="142dp"
-        android:layout_height="72dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="100dp"
+        android:layout_height="47dp"
         android:text="stop"
-        android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/startButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startButton" />
+        app:layout_constraintTop_toBottomOf="@+id/levelDown" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="JoystickSensor"
-        android:textSize="35sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/outputTextView"
+        android:layout_width="172dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="64dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="TextView"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stopButton" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
+    <com.example.alshelper.DynamicSquareLayout
+        android:id="@+id/dynamicSquareLayout"
+        android:layout_width="match_parent"
+        android:layout_height="405dp"
+        app:layout_constraintBottom_toTopOf="@+id/verticalSeekBar"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/levelDown"
+        app:layout_constraintVertical_bias="0.525">
+
+        <ImageView
+            android:id="@+id/xyAxis"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/xyaxis"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/xyaxis" />
+
+        <ImageView
+            android:id="@+id/target"
+            android:layout_width="27dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginRight="50dp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/target"
+            tools:layout_editor_absoluteY="79dp" />
+
+        <ImageView
+            android:id="@+id/target2"
+            android:layout_width="27dp"
+            android:layout_height="20dp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toStartOf="@+id/xyAxis"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/xyAxis"
+            app:srcCompat="@drawable/target"
+            tools:layout_editor_absoluteX="334dp"
+            tools:layout_editor_absoluteY="50dp" />
+
+        <ImageView
+            android:id="@+id/target3"
+            android:layout_width="27dp"
+            android:layout_height="20dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/xyAxis"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toBottomOf="@+id/xyAxis"
+            app:srcCompat="@drawable/target"
+            tools:layout_editor_absoluteX="334dp"
+            tools:layout_editor_absoluteY="196dp" />
+
+        <ImageView
+            android:id="@+id/dot"
+            android:layout_width="41dp"
+            android:layout_height="20dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/xyAxis"
+            app:layout_constraintEnd_toStartOf="@+id/xyAxis"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/xyAxis"
+            app:layout_constraintTop_toBottomOf="@+id/xyAxis"
+            app:srcCompat="@drawable/goldcoin"
+            tools:layout_editor_absoluteY="204dp" />
+
+    </com.example.alshelper.DynamicSquareLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

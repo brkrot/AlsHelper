@@ -79,7 +79,52 @@
         app:layout_constraintHorizontal_bias="0.741"
         app:layout_constraintStart_toEndOf="@+id/imageView" />
 
+    <TextView
+        android:id="@+id/outputTextView"
+        android:layout_width="251dp"
+        android:layout_height="151dp"
+        android:layout_marginTop="64dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="TextView"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="77dp"
+        android:layout_height="39dp"
+        android:text="start"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/outputTextView"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toEndOf="@+id/outputTextView"
+        app:layout_constraintTop_toBottomOf="@+id/restatButton" />
+
+    <Button
+        android:id="@+id/stopButton"
+        android:layout_width="100dp"
+        android:layout_height="47dp"
+        android:text="stop"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/startButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/levelDown" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="JoystickSensor"
+        android:textSize="35sp"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/verticalSeekBar" />
+
     <com.example.alshelper.DynamicSquareLayout
+        android:id="@+id/dynamicSquareLayout"
         android:layout_width="match_parent"
         android:layout_height="405dp"
         app:layout_constraintBottom_toTopOf="@+id/verticalSeekBar"
@@ -117,12 +162,13 @@
             android:id="@+id/dot"
             android:layout_width="20dp"
             android:layout_height="22dp"
-            app:layout_constraintBottom_toTopOf="@+id/xyAxis"
-            app:layout_constraintEnd_toStartOf="@+id/xyAxis"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/xyAxis"
-            app:layout_constraintTop_toBottomOf="@+id/xyAxis"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
             app:srcCompat="@drawable/goldcoin" />
+
     </com.example.alshelper.DynamicSquareLayout>
 
 

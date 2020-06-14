@@ -5,7 +5,7 @@ package com.example.alshelper;
 ##############*/
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Rect;
+
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +32,10 @@ public class sensor1Activity extends AppCompatActivity {
 #  METHODS   #
 ##############*/
 
+    /**
+     *
+     * @param level
+     */
     public void identifyLevelRange(int level)
     /*
     this function get level number(1-3) and
@@ -61,11 +65,11 @@ public class sensor1Activity extends AppCompatActivity {
     in case of edge level return TOAST
     */
     {
-        if (view.getId() == R.id.levelUp & currentLevel < 3){
+        if (view.getId() == R.id.levelUp && currentLevel < 3){
             currentLevel++;
             identifyLevelRange(currentLevel);
         }
-        else if  (view.getId() == R.id.levelDown & currentLevel > 1){
+        else if  (view.getId() == R.id.levelDown && currentLevel > 1){
             currentLevel--;
             identifyLevelRange(currentLevel);
         }
@@ -100,7 +104,7 @@ public class sensor1Activity extends AppCompatActivity {
             location = dot.getY() + dot.getHeight()/2;
         }
 
-        if (location + moveSteps > 0 & location + moveSteps < axisWidth){
+        if (location + moveSteps > 0 && location + moveSteps < axisWidth){
             if(hDirect){
                 dot.animate().translationXBy(moveSteps);
             }
@@ -110,7 +114,7 @@ public class sensor1Activity extends AppCompatActivity {
             float dotX = dot.getX() + dot.getWidth()/2;
             float dotY = dot.getY() + dot.getHeight()/2;
             Log.i("the dot placed on" , " x: " + dotX + " y:" + dotY);
-            if ((dotX > target.getX() & dotX < endOfTargetX) & (dotY > target.getY() & dotY < endOfTargetY)){
+            if ((dotX > target.getX() && dotX < endOfTargetX) && (dotY > target.getY() && dotY < endOfTargetY)){
                 final MediaPlayer win = MediaPlayer.create(this, R.raw.hit_the_target);
                 win.start();
             }
