@@ -22,11 +22,11 @@ public class SensorMenu extends AppCompatActivity {
 
                 break;
             case "3":
-                intent = new Intent(this, OnOffActivity.class);
+                intent = new Intent(this, OnOffSensorActivity.class);
                 startActivity(intent);
                 break;
             case "4":
-                intent = new Intent(this, NewJoystick.class);
+                intent = new Intent(this, AnalogSensorActivity.class);
                 startActivity(intent);
 
                 break;

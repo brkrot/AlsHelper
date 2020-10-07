@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OnOffSensorActivity">
+    tools:context=".AnalogSensorActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -22,7 +22,7 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ON OFF SENSOR"
+            android:text="ANALOG SENSOR"
             android:textColor="@android:color/holo_red_dark"
             android:textSize="36sp" />
 
@@ -47,18 +47,6 @@
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="@+id/guideline2"
         app:srcCompat="@drawable/greendot" />
-
-    <ImageView
-        android:id="@+id/redDot"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:translationZ="90dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"
-        app:layout_constraintEnd_toStartOf="@+id/guideline5"
-        app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toTopOf="@+id/guideline2"
-        app:srcCompat="@drawable/reddot" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -107,5 +95,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.7" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

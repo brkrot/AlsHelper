@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:onClick="chooseSensor"
             android:tag="4"
-            android:text="New Joystick" />
+            android:text="ANALOG SENSOR" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

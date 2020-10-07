@@ -12,7 +12,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class OnOffActivity extends AppCompatActivity {
+public class AnalogSensorActivity extends AppCompatActivity {
+
     BroadcastReceiver receiver = null;
 
     private TextView outputTextView;
@@ -20,7 +21,7 @@ public class OnOffActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_on_off);
+        setContentView(R.layout.activity_analog_sensor);
 
         outputTextView = (TextView)findViewById(R.id.outputTextView);
         receiver = new BroadcastReceiver() {
@@ -41,7 +42,7 @@ public class OnOffActivity extends AppCompatActivity {
         findViewById(R.id.startButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppBase.INSTANCE.bluetoothConnector.writeToArduino("S2");
+                AppBase.INSTANCE.bluetoothConnector.writeToArduino("S3");
                 AppBase.INSTANCE.bluetoothConnector.readDataRepeating();
             }
         });
@@ -49,18 +50,7 @@ public class OnOffActivity extends AppCompatActivity {
 
     private void drawOnUi(String data){
         try{
-            ImageView greenDot = (ImageView) findViewById(R.id.greendot);
-            ImageView redDot = (ImageView) findViewById(R.id.redDot);
-            if ("1".equals(data)){
-                Log.i("the xy values is: ", "botton need to be GREEN");
-                greenDot.setVisibility(View.VISIBLE);
-                redDot.setVisibility(View.INVISIBLE);
-            }
-            else{
-                Log.i("the xy values is: ", "botton need to be RED" + data);
-                redDot.setVisibility(View.VISIBLE);
-                greenDot.setVisibility(View.INVISIBLE);
-            }
+            Log.i("the resistance values is: ", data);
             outputTextView.setText(data);
 
         }
@@ -69,4 +59,3 @@ public class OnOffActivity extends AppCompatActivity {
         }
     }
 }
-

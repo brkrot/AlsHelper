@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OnOffActivity"></activity>
+        <activity android:name=".AnalogSensorActivity"></activity>
+        <activity android:name=".OnOffSensorActivity" />
         <activity android:name=".NewJoystick" />
         <activity android:name=".sensor1Activity" />
         <activity android:name=".SensorMenu" />
