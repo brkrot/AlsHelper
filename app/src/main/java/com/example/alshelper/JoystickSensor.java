@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import com.example.alshelper.DiagnosisDataCollector;
 
 
 public class JoystickSensor extends AppCompatActivity {
@@ -32,15 +33,13 @@ public class JoystickSensor extends AppCompatActivity {
 
     static final int JOYSTICK_NORMALIZE_FACTOR = 10;
 
-    static final int SEEK_BAR_HIGH_RANGE = 100;
+    static final double CHANGE_LEVEL_FACTOR = 1.5;
 
-    static final int SEEK_BAR_MEDIUM_RANGE = 50;
-
-    static final int SEEK_BAR_LOW_RANGE = 24;
+    static double targetFactor = 1;
 
     static int currentLevel = 2;
 
-    static int currentRange = SEEK_BAR_MEDIUM_RANGE;
+    DiagnosisDataCollector diagnosticData = new DiagnosisDataCollector();
 
     ImageView ivImage ;
 
@@ -51,29 +50,6 @@ public class JoystickSensor extends AppCompatActivity {
 ##############*/
 
     /**
-     *  this function get level number(1-3) and
-     *return the fit range for this level
-     *an error will return when the level is invalid
-     * @param level
-     */
-    public void identifyLevelRange(int level)
-    {
-        switch (level){
-            case 1:
-                currentRange = SEEK_BAR_LOW_RANGE;
-                break;
-            case 2:
-                currentRange = SEEK_BAR_MEDIUM_RANGE;
-                break;
-            case 3:
-                currentRange = SEEK_BAR_HIGH_RANGE;
-                break;
-            default:
-                Log.e("invalidInput", "invalid level input to identifyLevelRange function");
-        }
-    }
-
-    /**
      * this function called when UPPER/LOWER LEVEL button clicked
      * ++/-- the level and then restart
      * in case of edge level return TOAST
@@ -82,18 +58,23 @@ public class JoystickSensor extends AppCompatActivity {
     public void changeLevel(View view)
     {
         ImageView target = (ImageView)findViewById(R.id.target);
+        ImageView target2 = (ImageView)findViewById(R.id.target2);
+        ImageView target3 = (ImageView)findViewById(R.id.target3);
         if (view.getId() == R.id.levelUp & currentLevel < 3){
+            targetFactor = target.getWidth() * CHANGE_LEVEL_FACTOR;
             currentLevel++;
-            identifyLevelRange(currentLevel);
             Log.i("params", "changeLevel: " + target.getLayoutParams());
-            DynamicSquareLayout.LayoutParams layoutParams = new DynamicSquareLayout.LayoutParams(((Double)(target.getWidth()*1.5)).intValue(), ((Double)(target.getWidth()*1.5)).intValue());
-            target.setLayoutParams(layoutParams);
+            changeImageSize(target, target.getWidth() * CHANGE_LEVEL_FACTOR);
+            changeImageSize(target2, target.getWidth() * CHANGE_LEVEL_FACTOR);
+            changeImageSize(target3, target.getWidth() * CHANGE_LEVEL_FACTOR);
+            Log.i("params", "factor: " + currentLevel);
         }
         else if  (view.getId() == R.id.levelDown & currentLevel > 1){
+            targetFactor = target.getWidth() / CHANGE_LEVEL_FACTOR;
             currentLevel--;
-            identifyLevelRange(currentLevel);
-            DynamicSquareLayout.LayoutParams layoutParams = new DynamicSquareLayout.LayoutParams(((Double)(target.getWidth()/1.5)).intValue(), ((Double)(target.getWidth()/1.5)).intValue());
-            target.setLayoutParams(layoutParams);
+            changeImageSize(target, target.getWidth()/CHANGE_LEVEL_FACTOR);
+            changeImageSize(target2, target.getWidth()/CHANGE_LEVEL_FACTOR);
+            changeImageSize(target3, target.getWidth()/CHANGE_LEVEL_FACTOR);
         }
         else {
             Toast.makeText(getApplicationContext(),"You are already in the edge level",Toast.LENGTH_SHORT).show();
@@ -102,6 +83,11 @@ public class JoystickSensor extends AppCompatActivity {
         View restart = (View) findViewById(R.id.restatButton);
         restartSeek(restart);
         Log.i("change level","change level");
+    }
+
+    private void changeImageSize(ImageView target, double factor) {
+        DynamicSquareLayout.LayoutParams layoutParams = new DynamicSquareLayout.LayoutParams(((Double) (factor)).intValue(), ((Double) (factor)).intValue());
+        target.setLayoutParams(layoutParams);
     }
 
     /**
@@ -130,6 +116,10 @@ public class JoystickSensor extends AppCompatActivity {
             ImageView target2 = (ImageView) findViewById(R.id.target2);
             ImageView target3 = (ImageView) findViewById(R.id.target3);
             if(hitting_the_target(dotX, dotY, target) || hitting_the_target(dotX, dotY, target2) || hitting_the_target(dotX, dotY, target3)){
+                int left = diagnosticData.dataMap.get("Left ability");
+                diagnosticData.dataMap.remove("Left ability");
+                diagnosticData.dataMap.put("Left ability", left+1);
+                Log.i("the dot placed on" , "good!! LEFT ABILITY = " + diagnosticData.dataMap.get("Left ability"));
                 final MediaPlayer win = MediaPlayer.create(this, R.raw.hit_the_target);
                 win.start();
             }
@@ -168,24 +158,30 @@ public class JoystickSensor extends AppCompatActivity {
      */
     public void restartSeek(View view)
     {
+        AppBase.INSTANCE.bluetoothConnector.readDataRepeating();
         ImageView axis = (ImageView) findViewById(R.id.xyAxis);
         ImageView dot = (ImageView) findViewById(R.id.dot);
+        ImageView target = (ImageView) findViewById(R.id.target);
+        ImageView target2 = (ImageView) findViewById(R.id.target2);
+        ImageView target3 = (ImageView) findViewById(R.id.target3);
         float axisCenterX = axis.getX() + axis.getWidth()/2;
         float axisCenterY = axis.getY() + axis.getHeight()/2;
         float dotWidth = dot.getWidth()/2;
         float dotHeight = dot.getHeight()/2;
+        if (targetFactor ==1){
+            targetFactor = target2.getWidth();
+        }
+        double targetSize = (targetFactor)/2;
+        float floatTargetSize = (float)targetSize;
         dot.animate().x(axisCenterX-dotWidth).y(axisCenterY-dotHeight);
-        SeekBar horizenBar = (SeekBar) findViewById(R.id.horizenSeekBar);
-        SeekBar verticalBar = (SeekBar) findViewById(R.id.verticalSeekBar);
-        horizenBar.setMax(currentRange);
-        verticalBar.setMax(currentRange);
-        horizenBar.setProgress(currentRange/2);
-        verticalBar.setProgress(currentRange/2);
-
+        target.animate().x((axisCenterX/3)-floatTargetSize).y((axisCenterY/3)-floatTargetSize);
+        target2.animate().x(axisCenterX-floatTargetSize).y((axisCenterY/3)-floatTargetSize);
+        target3.animate().x((axisCenterX/3)-floatTargetSize).y(axisCenterY-floatTargetSize);
         float width = axis.getWidth();
         float height = axis.getHeight();
 
-        Log.i("the dot placed on" , width + " height " + height + " center " + axisCenterX + "  " + axisCenterY);
+        Log.i("the dot placed on" , floatTargetSize + " height " + height + " center " + axisCenterX + "  " + axisCenterY);
+        targetFactor = 1;
 
     }
 
@@ -193,58 +189,6 @@ public class JoystickSensor extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_joystick_sensor);
-
-
-
-        //initialize the seekbars + level
-        SeekBar horizenBar = (SeekBar) findViewById(R.id.horizenSeekBar);
-        SeekBar verticalBar = (SeekBar) findViewById(R.id.verticalSeekBar);
-
-        currentRange = SEEK_BAR_MEDIUM_RANGE;
-        horizenBar.setMax(currentRange);
-        verticalBar.setMax(currentRange);
-        horizenBar.setProgress(currentRange/2);
-        verticalBar.setProgress(currentRange/2);
-
-        horizenBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                Log.i("horizen seekBar Change" , Integer.toString(seekBar.getProgress()));
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                int xProgress = currentRange/2-seekBar.getProgress();
-                int yProgress = 0;
-                moveTheDot(xProgress, yProgress);
-            }
-        });
-
-        verticalBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                Log.i("vertical seekBar Change" , Integer.toString(seekBar.getProgress()));
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                int xProgress = 0;
-                int yProgress = currentRange/2-seekBar.getProgress();
-                moveTheDot(xProgress, yProgress);
-            }
-        });
-
-
-
 
         outputTextView = (TextView)findViewById(R.id.outputTextView);
         receiver = new BroadcastReceiver() {
@@ -273,7 +217,7 @@ public class JoystickSensor extends AppCompatActivity {
         findViewById(R.id.stopButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                outputTextView.setText("");
+                outputTextView.setText("input stopted");
                 AppBase.INSTANCE.bluetoothConnector.stopReadingData();
             }
         });
@@ -318,10 +262,10 @@ public class JoystickSensor extends AppCompatActivity {
         public NormalizeJoystickValues invoke() {
             xProgress = Integer.parseInt(xyProgress[0]) - JOYSTICK_RANGE / 2;
             yProgress = Integer.parseInt(xyProgress[1]) - JOYSTICK_RANGE / 2;
-            if (xProgress < 6 & xProgress > -1){
+            if (xProgress < 4 & xProgress > -1){
                 xProgress = 0;
             }
-            if (yProgress < 6 & yProgress > -1){
+            if (yProgress < 4 & yProgress > -1){
                 yProgress = 0;
             }
             xProgress = xProgress/JOYSTICK_NORMALIZE_FACTOR;

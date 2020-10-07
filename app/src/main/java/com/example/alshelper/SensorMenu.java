@@ -22,9 +22,8 @@ public class SensorMenu extends AppCompatActivity {
 
                 break;
             case "3":
-                intent = new Intent(this, sensor1Activity.class);
+                intent = new Intent(this, OnOffActivity.class);
                 startActivity(intent);
-
                 break;
             case "4":
                 intent = new Intent(this, NewJoystick.class);
