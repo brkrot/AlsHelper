@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void diconnectBT(){
+        Log.i("DISCCONCT","bla");
         AppBase.INSTANCE.bluetoothConnector.disconnectBT();
         bt.animate().alpha(0.1f).setDuration(500);
         connectBT.setEnabled(true);
@@ -42,6 +44,13 @@ public class MainActivity extends AppCompatActivity {
     public void goToSensorMenu(View v){
         if(AppBase.INSTANCE.isBluetoothConnected){
             Intent intent = new Intent(this, SensorMenu.class);
+            startActivity(intent);
+        }
+    }
+
+    public void terminal(View v){
+        if(AppBase.INSTANCE.isBluetoothConnected){
+            Intent intent = new Intent(this, Terminal.class);
             startActivity(intent);
         }
     }
