@@ -1,4 +1,4 @@
-package com.example.alshelper;
+package com.example.alshelper.sensors;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,21 +9,24 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.regex.Pattern;
+import com.example.alshelper.AppBase;
+import com.example.alshelper.R;
 
-public class NewJoystick extends AppCompatActivity {
+public class AnalogSensorActivity extends AppCompatActivity {
 
     BroadcastReceiver receiver = null;
-    TextView locationTextView;
 
-    private int[] pos;
+    private TextView outputTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_joystick);
+        setContentView(R.layout.activity_analog_sensor);
 
+        outputTextView = (TextView)findViewById(R.id.outputTextView);
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -31,6 +34,7 @@ public class NewJoystick extends AppCompatActivity {
                 if (!intent.getAction().equals("broadcast_data_from_bluetooth")) return;
                 String data = intent.getStringExtra("incoming");
                 if (data == null) return;
+
                 drawOnUi(data);
             }
         };
@@ -38,40 +42,23 @@ public class NewJoystick extends AppCompatActivity {
         // here in onCreate()
         registerReceiver(receiver, new IntentFilter("broadcast_data_from_bluetooth"));
 
-        locationTextView = findViewById(R.id.locationTextView);
         findViewById(R.id.startButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppBase.INSTANCE.bluetoothConnector.writeToArduino("S1");
+                AppBase.INSTANCE.bluetoothConnector.writeToArduino("S3");
                 AppBase.INSTANCE.bluetoothConnector.readDataRepeating();
             }
         });
-
     }
 
-    /**
-     * drawOnUi:
-     * The function Draw the point image on the axis by the arduino joystick info
-     * The Info is being sent every (!)READING_DATA_GAP in BlueToothAdapter ( now equals  to 300) ms
-     * @param data is a string with the data from the Arduino
-     */
     private void drawOnUi(String data){
+        try{
+            Log.i("the resistance values is: ", data);
+            outputTextView.setText(data);
 
-        //Log.i("tag",String.valueOf(pos[0])+"\n"+String.valueOf(pos[1]));
-        parseData(data);
-        locationTextView.setText("X="+String.valueOf(pos[0])+"\n"+"Y="+String.valueOf(pos[1]));
-    }
+        }
+        catch (Exception e){
 
-    /**
-     *function get the data and parse it to integers array
-     * @param data
-     */
-    private void parseData(String data) {
-        String[] textStr = data.split("#");
-        pos = new int[textStr.length];
-        for (int i = 0; i < textStr.length-1; i++) {
-            pos[i] = Integer.parseInt(textStr[i]);
         }
     }
-
 }

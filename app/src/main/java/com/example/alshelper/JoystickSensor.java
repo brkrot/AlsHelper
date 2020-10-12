@@ -10,14 +10,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import com.example.alshelper.DiagnosisDataCollector;
+
+import com.example.alshelper.processingData.DiagnosisDataCollector;
+import com.example.alshelper.sensors.DynamicSquareLayout;
 
 
 public class JoystickSensor extends AppCompatActivity {

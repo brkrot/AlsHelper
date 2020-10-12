@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".sensor1Activity">
+    tools:context=".sensors.sensor1Activity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -123,7 +123,7 @@
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@+id/verticalSeekBar" />
 
-    <com.example.alshelper.DynamicSquareLayout
+    <com.example.alshelper.sensors.DynamicSquareLayout
         android:id="@+id/dynamicSquareLayout"
         android:layout_width="match_parent"
         android:layout_height="405dp"
@@ -169,7 +169,7 @@
             app:layout_constraintTop_toBottomOf="parent"
             app:srcCompat="@drawable/goldcoin" />
 
-    </com.example.alshelper.DynamicSquareLayout>
+    </com.example.alshelper.sensors.DynamicSquareLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

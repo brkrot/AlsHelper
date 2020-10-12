@@ -13,15 +13,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Terminal"></activity>
-        <activity android:name=".AnalogSensorActivity" />
-        <activity android:name=".OnOffSensorActivity" />
-        <activity android:name=".NewJoystick" />
-        <activity android:name=".sensor1Activity" />
-        <activity android:name=".SensorMenu" />
+        <activity android:name=".bluetoothUtils.Terminal"></activity>
+        <activity android:name=".sensors.AnalogSensorActivity" />
+        <activity android:name=".sensors.OnOffSensorActivity" />
+        <activity android:name=".sensors.NewJoystick" />
+        <activity android:name=".sensors.sensor1Activity" />
+        <activity android:name=".sensors.SensorMenu" />
         <activity android:name=".JoystickSensor" />
         <activity android:name=".LampControl" />
-        <activity android:name=".PairedDevicesList" />
+        <activity android:name=".bluetoothUtils.PairedDevicesList" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

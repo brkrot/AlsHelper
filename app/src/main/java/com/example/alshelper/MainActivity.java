@@ -2,13 +2,16 @@ package com.example.alshelper;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.example.alshelper.bluetoothUtils.PairedDevicesList;
+import com.example.alshelper.bluetoothUtils.Terminal;
+import com.example.alshelper.sensors.SensorMenu;
 
 public class MainActivity extends AppCompatActivity {
 

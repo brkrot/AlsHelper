@@ -1,4 +1,4 @@
-package com.example.alshelper;
+package com.example.alshelper.sensors;
 
 /*############
 #  IMPORTS   #
@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Toast;
+
+import com.example.alshelper.R;
 
 public class sensor1Activity extends AppCompatActivity {
 /*##################

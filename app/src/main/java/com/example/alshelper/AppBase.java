@@ -2,6 +2,8 @@ package com.example.alshelper;
 
 import android.app.Application;
 
+import com.example.alshelper.bluetoothUtils.BluetoothConnector;
+
 public class AppBase extends Application {
 
     public static AppBase INSTANCE = null;

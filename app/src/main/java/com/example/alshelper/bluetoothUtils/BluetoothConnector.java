@@ -1,6 +1,5 @@
-package com.example.alshelper;
+package com.example.alshelper.bluetoothUtils;
 
-import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -10,9 +9,10 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.alshelper.AppBase;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.Socket;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

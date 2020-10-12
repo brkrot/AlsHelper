@@ -1,4 +1,4 @@
-package com.example.alshelper;
+package com.example.alshelper.processingData;
 import java.util.HashMap; // import the HashMap class
 
 public class DiagnosisDataCollector {

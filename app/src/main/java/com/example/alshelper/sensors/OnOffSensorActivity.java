@@ -1,4 +1,4 @@
-package com.example.alshelper;
+package com.example.alshelper.sensors;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,8 +12,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class AnalogSensorActivity extends AppCompatActivity {
+import com.example.alshelper.AppBase;
+import com.example.alshelper.R;
 
+public class OnOffSensorActivity extends AppCompatActivity {
     BroadcastReceiver receiver = null;
 
     private TextView outputTextView;
@@ -21,7 +23,7 @@ public class AnalogSensorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_analog_sensor);
+        setContentView(R.layout.activity_on_off);
 
         outputTextView = (TextView)findViewById(R.id.outputTextView);
         receiver = new BroadcastReceiver() {
@@ -42,7 +44,7 @@ public class AnalogSensorActivity extends AppCompatActivity {
         findViewById(R.id.startButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppBase.INSTANCE.bluetoothConnector.writeToArduino("S3");
+                AppBase.INSTANCE.bluetoothConnector.writeToArduino("S2");
                 AppBase.INSTANCE.bluetoothConnector.readDataRepeating();
             }
         });
@@ -50,7 +52,18 @@ public class AnalogSensorActivity extends AppCompatActivity {
 
     private void drawOnUi(String data){
         try{
-            Log.i("the resistance values is: ", data);
+            ImageView greenDot = (ImageView) findViewById(R.id.greendot);
+            ImageView redDot = (ImageView) findViewById(R.id.redDot);
+            if ("1".equals(data)){
+                Log.i("the botton values is: ", "botton need to be GREEN");
+                greenDot.setVisibility(View.VISIBLE);
+                redDot.setVisibility(View.INVISIBLE);
+            }
+            else{
+                Log.i("the botton values is: ", "botton need to be RED" + data);
+                redDot.setVisibility(View.VISIBLE);
+                greenDot.setVisibility(View.INVISIBLE);
+            }
             outputTextView.setText(data);
 
         }
@@ -59,3 +72,4 @@ public class AnalogSensorActivity extends AppCompatActivity {
         }
     }
 }
+

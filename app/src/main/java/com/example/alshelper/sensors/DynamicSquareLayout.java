@@ -1,4 +1,4 @@
-package com.example.alshelper;
+package com.example.alshelper.sensors;
 
 import android.content.Context;
 import android.util.AttributeSet;

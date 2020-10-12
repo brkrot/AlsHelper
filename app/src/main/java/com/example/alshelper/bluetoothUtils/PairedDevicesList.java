@@ -1,4 +1,4 @@
-package com.example.alshelper;
+package com.example.alshelper.bluetoothUtils;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -13,6 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.alshelper.AppBase;
+import com.example.alshelper.R;
 
 import java.util.ArrayList;
 import java.util.Set;
