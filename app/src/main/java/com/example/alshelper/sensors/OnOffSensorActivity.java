@@ -54,13 +54,14 @@ public class OnOffSensorActivity extends AppCompatActivity {
         try{
             ImageView greenDot = (ImageView) findViewById(R.id.greendot);
             ImageView redDot = (ImageView) findViewById(R.id.redDot);
-            if ("1".equals(data)){
-                Log.i("the botton values is: ", "botton need to be GREEN");
+            String[] extractData = data.split("#");
+            if ("1".equals(extractData[0]) || "1".equals(extractData[1])){
+                Log.i("the botton values is: ", "botton need to be GREEN" + extractData[1]);
                 greenDot.setVisibility(View.VISIBLE);
                 redDot.setVisibility(View.INVISIBLE);
             }
             else{
-                Log.i("the botton values is: ", "botton need to be RED" + data);
+                Log.i("the botton values is: ", "botton need to be RED" + extractData[1]);
                 redDot.setVisibility(View.VISIBLE);
                 greenDot.setVisibility(View.INVISIBLE);
             }

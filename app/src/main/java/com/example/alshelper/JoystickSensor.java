@@ -231,7 +231,7 @@ public class JoystickSensor extends AppCompatActivity {
                 int yProgress = normalizeJoystickValues.getyProgress();
                 //to prevent unnecessary function calls
                 if(xProgress != 0 || yProgress !=0){
-                    moveTheDot(xProgress, yProgress);
+                    moveTheDot(xProgress, -yProgress);
                     outputTextView.setText(data);
                 }
             }

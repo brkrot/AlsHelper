@@ -96,5 +96,20 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.7" />
 
+    <TextView
+        android:id="@+id/outputTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="48dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="Press START!"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="@+id/greendot"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
