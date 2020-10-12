@@ -19,8 +19,7 @@
         <activity android:name=".sensors.NewJoystick" />
         <activity android:name=".sensors.sensor1Activity" />
         <activity android:name=".sensors.SensorMenu" />
-        <activity android:name=".JoystickSensor" />
-        <activity android:name=".LampControl" />
+        <activity android:name=".sensors.JoystickSensor" />
         <activity android:name=".bluetoothUtils.PairedDevicesList" />
         <activity android:name=".MainActivity">
             <intent-filter>

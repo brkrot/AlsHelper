@@ -37,12 +37,12 @@ public class MainActivity extends AppCompatActivity {
         sensors.setEnabled(false);
     }
 
-    public void goToLampControl(View v){
+    /*public void goToLampControl(View v){
         if(AppBase.INSTANCE.isBluetoothConnected){
             Intent intent = new Intent(this, LampControl.class);
             startActivity(intent);
         }
-    }
+    }*/
 
     public void goToSensorMenu(View v){
         if(AppBase.INSTANCE.isBluetoothConnected){

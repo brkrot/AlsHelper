@@ -1,4 +1,4 @@
-package com.example.alshelper;
+package com.example.alshelper.sensors;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.alshelper.AppBase;
+import com.example.alshelper.R;
 import com.example.alshelper.processingData.DiagnosisDataCollector;
 import com.example.alshelper.sensors.DynamicSquareLayout;
 

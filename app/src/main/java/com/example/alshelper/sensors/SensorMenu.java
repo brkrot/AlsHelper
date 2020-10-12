@@ -6,10 +6,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.alshelper.JoystickSensor;
 import com.example.alshelper.R;
-import com.example.alshelper.sensors.AnalogSensorActivity;
-import com.example.alshelper.sensors.OnOffSensorActivity;
 
 public class SensorMenu extends AppCompatActivity {
 
