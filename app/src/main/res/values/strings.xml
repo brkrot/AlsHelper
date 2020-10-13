@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">AlsHelper</string>
+
+
+    <string name="app_name">TestingTxtFiles</string>
+    <string name="choose_sensor">Choose the suitable Sensor From The list</string>
+    <string name="sensor_joystick">Joystick</string>
+    <string name="sensor_potentiometer">Potentiometer</string>
+    <string name="sensor_button">Button</string>
+    <string name="sensor_magnet">Magnet</string>
+
+    <string name="chosen_action_for_arduino">Chosen_action_for_arduino</string>
+
+    <string name="action_light_on">Turn light on</string>
+    <string name="action_light_off">Turn light off</string>
+    <string name="action_ac_on">Turn Air Condition On</string>
+    <string name="action_ac_off">Turn Air Condition Off</string>
+    <string name="action_ring_bell">ringBell</string>
+    <string name="action_dial_number">dial</string>
+    <string name="action_7">a7</string>
+
+    <string name="actionCode_light_on">lightOn()</string>
+    <string name="actionCode_light_off">lightOff()</string>
+    <string name="actionCode_ac_on">acON()</string>
+    <string name="actionCode_ac_off">acOff()</string>
+    <string name="actionCode_ring_bell">ringBell()</string>
+    <string name="actionCode_dial_number">dial()</string>
+    <string name="actionCode_7">a7()</string>
 </resources>

@@ -75,7 +75,7 @@ public class BluetoothConnector {
                     temp = new String(buffer, 0, i);
 
                     sendDataBroadcast(temp);
-                    Thread.sleep(500);
+                    Thread.sleep(READING_DATA_GAP);
                 }
             }
             Log.i("Stoppeed", "The while has stopped");
