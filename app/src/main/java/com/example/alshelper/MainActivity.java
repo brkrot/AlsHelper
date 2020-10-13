@@ -5,13 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.example.alshelper.bluetoothUtils.PairedDevicesList;
-import com.example.alshelper.bluetoothUtils.Terminal;
-import com.example.alshelper.sensors.SensorMenu;
+
+import com.example.alshelper.bluetoothUtils.*;
+import com.example.alshelper.sensors.*;
+import com.example.alshelper.processingData.Form;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,39 +24,37 @@ public class MainActivity extends AppCompatActivity {
     Button connectBT;
     Button disconnect;
     Button sensors;
-    Button lamp;
+    Button form;
 
-    public void connectBT(){
+    public void connectBT() {
         Intent intent = new Intent(this, PairedDevicesList.class);
         startActivity(intent);
     }
 
-    private void diconnectBT(){
-        Log.i("DISCCONCT","bla");
+    private void diconnectBT() {
+        Log.i("DISCCONCT", "bla");
         AppBase.INSTANCE.bluetoothConnector.disconnectBT();
         bt.animate().alpha(0.1f).setDuration(500);
         connectBT.setEnabled(true);
         disconnect.setEnabled(false);
-        lamp.setEnabled(false);
+        //form.setEnabled(false);
         sensors.setEnabled(false);
     }
 
-    /*public void goToLampControl(View v){
-        if(AppBase.INSTANCE.isBluetoothConnected){
-            Intent intent = new Intent(this, LampControl.class);
-            startActivity(intent);
-        }
-    }*/
+    public void createHelpingSystem(View v) {
+        Intent intent = new Intent(this, Form.class);
+        startActivity(intent);
+    }
 
-    public void goToSensorMenu(View v){
-        if(AppBase.INSTANCE.isBluetoothConnected){
+    public void goToSensorMenu(View v) {
+        if (AppBase.INSTANCE.isBluetoothConnected) {
             Intent intent = new Intent(this, SensorMenu.class);
             startActivity(intent);
         }
     }
 
-    public void terminal(View v){
-        if(AppBase.INSTANCE.isBluetoothConnected){
+    public void terminal(View v) {
+        if (AppBase.INSTANCE.isBluetoothConnected) {
             Intent intent = new Intent(this, Terminal.class);
             startActivity(intent);
         }
@@ -62,24 +64,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bt = (ImageView)findViewById(R.id.bluetoothImageView);
+        bt = (ImageView) findViewById(R.id.bluetoothImageView);
         bt.setAlpha(0.1f);
         connectBT = findViewById(R.id.connectButton);
         disconnect = findViewById(R.id.disconnectButton);
-        lamp = findViewById(R.id.lampButton);
+        form = findViewById(R.id.formBtn);
         sensors = findViewById(R.id.sensorsButton);
 
         disconnect.setEnabled(false);
-        lamp.setEnabled(false);
+        // form.setEnabled(false);
         sensors.setEnabled(false);
 
 
         findViewById(R.id.bluetoothImageView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!AppBase.INSTANCE.isBluetoothConnected){
+                if (!AppBase.INSTANCE.isBluetoothConnected) {
                     connectBT();
-                }else{
+                } else {
                     diconnectBT();
                 }
             }
@@ -103,12 +105,47 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (AppBase.INSTANCE.bluetoothConnector!=null) {
+        if (AppBase.INSTANCE.bluetoothConnector != null) {
             bt.animate().alpha(1f).setDuration(2000);
             disconnect.setEnabled(true);
-            lamp.setEnabled(true);
+            //form.setEnabled(true);
             sensors.setEnabled(true);
             connectBT.setEnabled(false);
+        }
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.my_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        Intent intent;
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.terminalItem:
+                intent = new Intent(this, Terminal.class);
+                startActivity(intent);
+                return true;
+            case R.id.MakeCodeItem:
+                intent = new Intent(this, Form.class);
+                startActivity(intent);
+                return true;
+            case R.id.SensorMenuItem:
+                intent = new Intent(this, SensorMenu.class);
+                startActivity(intent);
+                return true;
+            case R.id.aboutItem:
+                intent = new Intent(this, About.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

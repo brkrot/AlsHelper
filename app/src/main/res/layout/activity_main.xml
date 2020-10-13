@@ -30,11 +30,11 @@
         app:srcCompat="@drawable/bt" />
 
     <Button
-        android:id="@+id/lampButton"
+        android:id="@+id/formBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="goToLampControl"
-        android:text="Lamp Control"
+        android:onClick="createHelpingSystem"
+        android:text="create Helping System"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:text="Disconnect"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/lampButton"
+        app:layout_constraintBottom_toTopOf="@+id/formBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +65,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lampButton"
+        app:layout_constraintTop_toBottomOf="@+id/formBtn"
         app:layout_constraintVertical_bias="0.179" />
 
     <Button

@@ -13,13 +13,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".bluetoothUtils.Terminal"></activity>
+        <activity android:name=".About"></activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" />
+        <activity android:name=".processingData.EditCode" />
+        <activity android:name=".processingData.Form" />
         <activity android:name=".sensors.AnalogSensorActivity" />
         <activity android:name=".sensors.OnOffSensorActivity" />
         <activity android:name=".sensors.NewJoystick" />
         <activity android:name=".sensors.sensor1Activity" />
         <activity android:name=".sensors.SensorMenu" />
         <activity android:name=".sensors.JoystickSensor" />
+        <activity android:name=".bluetoothUtils.Terminal" />
         <activity android:name=".bluetoothUtils.PairedDevicesList" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -28,6 +34,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.alshelper.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
     </application>
 
 </manifest>

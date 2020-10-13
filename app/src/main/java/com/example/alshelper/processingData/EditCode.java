@@ -1,12 +1,15 @@
 package com.example.alshelper.processingData;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,119 +22,71 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 import com.example.alshelper.R;
+
 public class EditCode extends AppCompatActivity {
 
-    String fileName;
+    String outputFileName;
     File outputArduinoFile;
-    String content;
+    String textContent;
     EditText mEditText;
-    Map<String, String> actions;
-    ArrayList chosenAction;
+    Map<String, String> allPossibleActions;
+    ArrayList allChosenActions;
+    String patientName = "", chosenSensor = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_code);
 
-        /*This is the input from the user This is posted from the form*/
+        Intent in;
+        in = getIntent();
 
-        chosenAction = (ArrayList<String>) getIntent().getStringArrayListExtra(getString(R.string.chosen_action_for_arduino));
-
-        fileName = chosenAction.get(0)+".txt";
-        /*outputArduinoFile = new File("data/data/com.example.testingtxtfiles/A.txt");
-
-        if (!outputArduinoFile.exists()) {
-            try {
-                outputArduinoFile.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }*/
-
-
-        content="";
+        chosenSensor = in.getStringExtra("CHOSEN_SENSOR");
+        allChosenActions = (ArrayList<String>) in.getStringArrayListExtra(getString(R.string.chosen_action_for_arduino));
+        patientName = in.getStringExtra("PATIENT_NAME");
+        outputFileName = patientName + "'s_Personal_Code_" + chosenSensor + ".ino";
+        textContent = "";
         mEditText = findViewById(R.id.edit_text);
 
-        {
-            /*Setting a dictionary ,each codeword equal to some code in arduino*/
-            actions = new HashMap<>();
-            String[] helpingSystemActions = getResources().getStringArray(R.array.helpingSystemActions);
-            String[] helpingSystemActionsCodes = getResources().getStringArray((R.array.helpingSystemActionsCodes));
-            for(int i=0;i<helpingSystemActions.length;i++){
-                actions.put(helpingSystemActions[i],helpingSystemActionsCodes[i]);
-            }
-
+        /*Setting a dictionary ,each codeword equal to some code in arduino*/
+        allPossibleActions = new HashMap<>();
+        String[] helpingSystemActionsNames = getResources().getStringArray(R.array.helpingSystemActions);
+        String[] helpingSystemActionsCodes = getResources().getStringArray((R.array.helpingSystemActionsCodes));
+        /*Combining the names and the actual code lines to call any action, as pairs in hashmap*/
+        for (int i = 0; i < helpingSystemActionsNames.length; i++) {
+            allPossibleActions.put(helpingSystemActionsNames[i], helpingSystemActionsCodes[i]);
         }
     }
 
-    public void share(View v) {
-       /* // Set up an Intent to send back to apps that request a file
-        resultIntent =
-                new Intent("com.example.myapp.ACTION_RETURN_FILE");
-        // Get the files/ subdirectory of internal storage
-        privateRootDir = getFilesDir();
-        // Get the files/images subdirectory;
-        imagesDir = new File(privateRootDir, "images");
-        // Get the files in the images subdirectory
-        imageFiles = imagesDir.listFiles();
-        // Set the Activity's result to null to begin with
-        setResult(Activity.RESULT_CANCELED, null);*/
-        /*
-
-        System.out.println();
-        String path = getBaseContext().getFilesDir().getAbsolutePath();
-
-        File requestFile = new File(fileName);
-        Uri fileUri = FileProvider.getUriForFile(
-                EditCode.this,
-                "com.example.testingtxtfiles.fileprovider",
-                requestFile);
-        if(fileUri != null){
-            Intent resultIntent;
-            resultIntent.addFlags(
-                    Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        }
-
-        Intent intentShareFile = new Intent(Intent.ACTION_SEND);
-
-        intentShareFile.setType("*//**");//URLConnection.guessContentTypeFromName(file.getName()));*/
-       /* intentShareFile.putExtra(Intent.EXTRA_STREAM,fileUri);
-
-        //if you need
-        //intentShareFile.putExtra(Intent.EXTRA_SUBJECT,"Sharing File Subject);
-        //intentShareFile.putExtra(Intent.EXTRA_TEXT, "Sharing File Description");
-
-        startActivity(Intent.createChooser(intentShareFile, "Share File"));*/
-
-    }
-
+    /*
+    loading the content of the blank file to the screen*/
     public void load(View v) {
-        FileInputStream fis = null;
+        FileInputStream fileInputStream = null;
         BufferedReader bufferedReader = null;
         try {
-
             //Opening an input stream...
-            InputStream inputStream = getAssets().open(chosenAction.get(0)+".ino");
+            InputStream inputStream = getAssets().open("Blank" + chosenSensor + ".ino");
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
             bufferedReader = new BufferedReader(inputStreamReader);
-            StringBuilder sb = new StringBuilder();
+            StringBuilder stringBuilder = new StringBuilder();
             String text;
 
             while ((text = bufferedReader.readLine()) != null) {
-                sb.append(text).append("\n");
+                stringBuilder.append(text).append("\n");
             }
-            content  = sb.toString();
-            mEditText.setText(sb.toString());
+            textContent = stringBuilder.toString();
+            mEditText.setText(stringBuilder.toString());
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if (fis != null) {
+            if (fileInputStream != null) {
                 try {
-                    fis.close();
+                    fileInputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -139,40 +94,48 @@ public class EditCode extends AppCompatActivity {
         }
     }
 
-    public void replace(View v){
+    public void replace(View v) {
 
-        String arduinoDataSensor = chosenAction.get(0).toString();
+        textContent = textContent.replace("#PATIENT_NAME",patientName);
 
-        if(arduinoDataSensor.equals(getString(R.string.sensor_joystick))){    //Joystick
-
-            for(int i=1;i<=4;i++){
-                content = content.replace
-                        ("$"+Integer.toString(i-1),
-                                actions.get(chosenAction.get(i)));
+        if (chosenSensor.equals(getString(R.string.sensor_joystick))) {    //Joystick
+            String codeLine = "";
+            for (int i = 1; i <= 4; i++) {
+                /*Get the code line corresponding to the chosen action at [i-1]*/
+                codeLine = allPossibleActions.get(allChosenActions.get(i - 1));
+                textContent = textContent.replace("//$" + i, codeLine);
             }
-            mEditText.setText(content.toString());
+            mEditText.setText(textContent);
+            Log.i("New File", textContent);
 
             Toast.makeText(this, "The code was changed",
                     Toast.LENGTH_LONG).show();
-        }else if(arduinoDataSensor.equals(getString(R.string.sensor_potentiometer))){
+        } else if (chosenSensor.equals(getString(R.string.sensor_potentiometer))) {
 
-        }else if(arduinoDataSensor.equals(getString(R.string.sensor_button))){
+        } else if (chosenSensor.equals(getString(R.string.sensor_button))) {
 
-        } else if(arduinoDataSensor.equals(getString(R.string.sensor_magnet))){
+        } else if (chosenSensor.equals(getString(R.string.sensor_name_magnet))) {
 
         }
     }
 
     public void save(View v) {
         String text = mEditText.getText().toString();
+        File files = getFilesDir();
+        File codesFolder = new File(files, "codes");
+        File newFile = new File(codesFolder, outputFileName);
         FileOutputStream fileOutputStream = null;
+        try {
+            fileOutputStream = new FileOutputStream(newFile, false);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         try {
-            fileOutputStream = openFileOutput(fileName, MODE_PRIVATE);
-            fileOutputStream.write(content.getBytes());
+            fileOutputStream.write(text.getBytes());
             //outputArduinoFile = new File(getFilesDir()+"/"+fileName);
-            mEditText.getText().clear();
-            Toast.makeText(this, "Saved to " + getFilesDir() + "/" + fileName,
+            //mEditText.getText().clear();
+            Toast.makeText(this, "Saved to "+newFile.getAbsolutePath(),
                     Toast.LENGTH_LONG).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -189,4 +152,36 @@ public class EditCode extends AppCompatActivity {
         }
     }
 
+
+    public void share(View v) {
+
+        File privateRootDir = getFilesDir();
+        File codesDir;
+        codesDir = new File(privateRootDir, "codes");
+        File[] codesFiles;
+        codesFiles = codesDir.listFiles();
+        File myCode = new File(codesDir, outputFileName);
+        if (myCode.exists()) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+
+            File requestFile = new File(myCode.getAbsolutePath());//"/data/user/0/com.example.alshelper/files/codes/test2.txt");
+            Uri fileUri = null;
+            try {
+                fileUri = FileProvider.getUriForFile(EditCode.this, "com.example.alshelper.fileprovider", requestFile);
+            } catch (IllegalArgumentException e) {
+                Log.e("File Selector",
+                        "The selected file can't be shared: " + requestFile.toString());
+            }
+
+
+            sendIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
+            //sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+            sendIntent.setType("text/plain");
+
+            startActivity(Intent.createChooser(sendIntent, "Share image via..."));
+        }
+
+
+    }
 }

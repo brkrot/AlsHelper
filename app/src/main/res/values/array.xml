@@ -5,7 +5,7 @@
         <item>@string/sensor_joystick</item>
         <item>@string/sensor_potentiometer</item>
         <item>@string/sensor_button</item>
-        <item>@string/sensor_magnet</item>
+        <item>@string/sensor_name_magnet</item>
     </string-array>
 
     <string-array name="helpingSystemActions">
