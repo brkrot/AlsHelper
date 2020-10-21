@@ -1,12 +1,12 @@
 package com.example.alshelper.bluetoothUtils;
 
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.example.alshelper.AppBase;
@@ -24,7 +24,7 @@ public class BluetoothConnector {
     private final static int BUFFER_SIZE = 256;
 
     private final static int READING_DATA_GAP = 300;
-    //InputStream inputStream;
+
     Context context;
 
     // todo LEARN - executor
@@ -39,8 +39,6 @@ public class BluetoothConnector {
     private final String address;
 
     private BluetoothAdapter myBluetooth = null;
-    public InputStream inputStream = null;
-
 
     private final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
@@ -58,78 +56,27 @@ public class BluetoothConnector {
         new ConnectBT().execute(); //Call the class to connect
     }
 
-    public void singleRun() {
-        String temp = "";
-        try (InputStream inputStream = btSocket.getInputStream()) {
-            while (isReadindData()) {
-                byte[] buffer = new byte[BUFFER_SIZE];
-                if (isReadindData()) {
-                    inputStream.read(buffer);
-
-                    int i;
-                    /*
-                     * This is needed because new String(buffer) is taking the entire buffer i.e. 256 chars on Android 2.3.4 http://stackoverflow.com/a/8843462/1287554
-                     */
-                    for (i = 0; i < buffer.length && buffer[i] != 0; i++) {
-                    }/*TODO*/
-                    temp = new String(buffer, 0, i);
-
-                    sendDataBroadcast(temp);
-                    Thread.sleep(READING_DATA_GAP);
-                }
-            }
-            Log.i("Stoppeed", "The while has stopped");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    boolean isReadindData() {
-        return isReadingData.get();
-
-    }
-
     //todo what if some disconnect, how do I re-connect?
     /*----------------------------------------------------------------------*/
     /*readDataRepeating*/
     public void readDataRepeating() {
         isReadingData.set(true);        //We set the boolean var as we staert to read the data from the BT
 
-        //executor.execute(new Runnable() {
-          Thread t = new Thread() {
-              @Override
-              public void run() {
-                  String temp = "";
-                  try {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                // here we are in the executor thread!
+                if (isReadingData.get() != true) {      //This is the stop condition
+                    return;
+                }
 
-                  if(inputStream==null){
-                      inputStream  = btSocket.getInputStream();
-                  }
-                      while (isReadindData()) {
-                          byte[] buffer = new byte[BUFFER_SIZE];
-                          if (isReadindData()) {
-                              inputStream.read(buffer);
-
-                              int i;
-                              /*
-                               * This is needed because new String(buffer) is taking the entire buffer i.e. 256 chars on Android 2.3.4 http://stackoverflow.com/a/8843462/1287554
-                               */
-                              for (i = 0; i < buffer.length && buffer[i] != 0; i++) {
-                              }/*TODO*/
-                              temp = new String(buffer, 0, i);
-
-                              sendDataBroadcast(temp);
-                              Thread.sleep(500);
-                          }
-                      }
-
-                      Log.i("Stoppeed", "The while has stopped");
-                  } catch (Exception e) {
-                      e.printStackTrace();
-                  }
-              }
-              //});
-          };
-          t.start();
+                try (InputStream inputStream = btSocket.getInputStream()) {
+                    readDataOnceAndScheduleFuture(inputStream);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /*----------------------------------------------------------------------*/
@@ -138,13 +85,11 @@ public class BluetoothConnector {
         String incomingData = null;
 
         if (isReadingData.get() != true) {
-//            try {
-
-//                inputStream.close(); // todo ERR catch exceptions ...
-
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+            try {
+                inputStream.close(); // todo ERR catch exceptions ...
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return;
         }
 
@@ -188,29 +133,6 @@ public class BluetoothConnector {
     public void stopReadingData() {
         isReadingData.set(false);
         // writeToArduino("S0");
-    }
-
-
-    public String readOnce() {
-        try {
-            InputStream inputStream = btSocket.getInputStream();
-            if (inputStream.available() > 0) {
-                byte[] buffer = new byte[BUFFER_SIZE];
-                inputStream.read(buffer);
-                int i;
-                /*
-                 * This is needed because new String(buffer) is taking the entire buffer i.e. 256 chars on Android 2.3.4 http://stackoverflow.com/a/8843462/1287554
-                 */
-                for (i = 0; i < buffer.length && buffer[i] != 0; i++) {
-                }/*TODO*/
-                String tempStr = new String(buffer, 0, i);
-                return tempStr;  //todo erase the double use of strings
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
     }
 
     /*----------------------------------------------------------------------*/
@@ -311,8 +233,8 @@ public class BluetoothConnector {
 
             try {
                 btSocket.close();
-                AppBase.INSTANCE.isBluetoothConnected = false;
-                //msg("Disconnected", 1); todo set msg
+                AppBase.INSTANCE.isBluetoothConnected=false;
+                msg("Disconnected", 1);
             } catch (IOException e) {
 
                 e.printStackTrace();

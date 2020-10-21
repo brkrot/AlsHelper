@@ -59,7 +59,7 @@ String input;
             ex.printStackTrace();
         }
     }
-
+/*
     public void send(View v){
         AppBase.INSTANCE.bluetoothConnector.writeToArduino(sendText.getText().toString());
         if(AppBase.INSTANCE.bluetoothConnector.isReadindData()!=true) {
@@ -68,7 +68,7 @@ String input;
 //            outputTextView.setText(input);
         }
     }
-
+*/
     public void stop(View v) {
         // call the superclass method first
         super.onStop();
