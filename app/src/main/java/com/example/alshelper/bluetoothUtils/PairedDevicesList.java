@@ -36,7 +36,7 @@ public class PairedDevicesList extends AppCompatActivity {
         setContentView(R.layout.activity_connect_to_bluetooth);
 
         pairedDevicesListView =(ListView) findViewById(R.id.pairedDevicesListView);
-        searchButton = (Button) findViewById(R.id.searchButton);
+        //searchButton = (Button) findViewById(R.id.searchButton);
 
 
         //if the device has bluetooth
@@ -54,13 +54,7 @@ public class PairedDevicesList extends AppCompatActivity {
             startActivityForResult(turnBTon,1);
         }
 
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                pairedDevicesList();
-            }
-        });
+        pairedDevicesList();
     }
 
     private void pairedDevicesList()

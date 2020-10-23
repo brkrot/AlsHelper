@@ -1,6 +1,7 @@
 package com.example.alshelper.processingData;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -31,6 +33,14 @@ public class Form extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
+
+        TextView text = new TextView(this);
+        text.setText("hello!");
+        text.setTextColor(Color.RED);
+
+
+        LinearLayout linearLayout = findViewById(R.id.actionsLinearLayout);
+        linearLayout.addView(text);
 
         patientName = (EditText) findViewById(R.id.patientName);
         send = (Button) findViewById(R.id.button_send);

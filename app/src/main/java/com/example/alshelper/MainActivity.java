@@ -2,8 +2,11 @@ package com.example.alshelper;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,11 +23,13 @@ import com.example.alshelper.processingData.Form;
 public class MainActivity extends AppCompatActivity {
 
 
-    ImageView bt;
+    private ImageView bt;
     Button connectBT;
     Button disconnect;
     Button sensors;
     Button form;
+    private Menu menu = null;
+    private SharedPreferences sharedPreferences;
 
     public void connectBT() {
         Intent intent = new Intent(this, PairedDevicesList.class);
@@ -53,17 +58,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void terminal(View v) {
-        if (AppBase.INSTANCE.isBluetoothConnected) {
-            Intent intent = new Intent(this, Terminal.class);
-            startActivity(intent);
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        Context context;
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         bt = (ImageView) findViewById(R.id.bluetoothImageView);
         bt.setAlpha(0.1f);
         connectBT = findViewById(R.id.connectButton);
@@ -112,14 +115,45 @@ public class MainActivity extends AppCompatActivity {
             sensors.setEnabled(true);
             connectBT.setEnabled(false);
         }
+
+        boolean debugMode = sharedPreferences.getBoolean("debug_mode", false);
+        Log.i("Debug mode",String.valueOf(debugMode));
+        if(menu!=null){
+            if (debugMode) {
+                showOption(R.id.terminalItem);
+            } else {
+                hideOption(R.id.terminalItem);
+            }
+        }
+
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
+        this.menu = menu;
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.my_menu, menu);
+        inflater.inflate(R.menu.main_menu, menu);
+        boolean debugMode = sharedPreferences.getBoolean("debug_mode", false);
+        Log.i("Debug mode",String.valueOf(debugMode));
+        if (debugMode) {
+            showOption(R.id.terminalItem);
+        } else {
+            hideOption(R.id.terminalItem);
+        }
+
         return true;
+    }
+
+    public void hideOption(int id) {
+        MenuItem item = menu.findItem(id);
+        item.setVisible(false);
+    }
+
+    public void showOption(int id) {
+        MenuItem item = menu.findItem(id);
+        item.setVisible(true);
     }
 
     @Override
@@ -128,6 +162,13 @@ public class MainActivity extends AppCompatActivity {
         Intent intent;
         // Handle item selection
         switch (item.getItemId()) {
+            case R.id.bluetoothItem:
+                if (!AppBase.INSTANCE.isBluetoothConnected) {
+                    connectBT();
+                } else {
+                    diconnectBT();
+                }
+                return true;
             case R.id.terminalItem:
                 intent = new Intent(this, Terminal.class);
                 startActivity(intent);
@@ -142,6 +183,10 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.aboutItem:
                 intent = new Intent(this, About.class);
+                startActivity(intent);
+                return true;
+            case R.id.settingsItem:
+                intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
             default:
