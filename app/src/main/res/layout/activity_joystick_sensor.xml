@@ -45,18 +45,18 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/levelUp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="changeLevel"
-                android:text="UPER LEVEL" />
-
-            <Button
                 android:id="@+id/levelDown"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="changeLevel"
                 android:text="LOWER LEVEL" />
+
+            <Button
+                android:id="@+id/levelUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="changeLevel"
+                android:text="UPER LEVEL" />
         </TableRow>
 
         <TableRow
@@ -120,9 +120,10 @@
             app:srcCompat="@drawable/xyaxis" />
 
         <ImageView
-            android:id="@+id/target"
-            android:layout_width="27dp"
-            android:layout_height="20dp"
+            android:id="@+id/target1"
+            android:tag="target1"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="50dp"
             android:layout_marginRight="50dp"
@@ -134,8 +135,9 @@
 
         <ImageView
             android:id="@+id/target2"
-            android:layout_width="27dp"
-            android:layout_height="20dp"
+            android:tag="target2"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginTop="50dp"
             android:visibility="visible"
             app:layout_constraintEnd_toStartOf="@+id/xyAxis"
@@ -148,8 +150,9 @@
 
         <ImageView
             android:id="@+id/target3"
-            android:layout_width="27dp"
-            android:layout_height="20dp"
+            android:tag="target3"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginEnd="50dp"
             android:layout_marginRight="50dp"
             android:visibility="visible"
@@ -163,7 +166,7 @@
 
         <ImageView
             android:id="@+id/dot"
-            android:layout_width="41dp"
+            android:layout_width="20dp"
             android:layout_height="20dp"
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/xyAxis"

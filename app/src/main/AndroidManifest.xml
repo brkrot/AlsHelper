@@ -21,8 +21,6 @@
         <activity android:name=".processingData.Form" />
         <activity android:name=".sensors.AnalogSensorActivity" />
         <activity android:name=".sensors.OnOffSensorActivity" />
-        <activity android:name=".sensors.NewJoystick" />
-        <activity android:name=".sensors.sensor1Activity" />
         <activity android:name=".sensors.SensorMenu" />
         <activity android:name=".sensors.JoystickSensor" />
         <activity android:name=".bluetoothUtils.Terminal" />
