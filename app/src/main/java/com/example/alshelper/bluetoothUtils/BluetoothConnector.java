@@ -1,5 +1,6 @@
 package com.example.alshelper.bluetoothUtils;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -7,6 +8,7 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.alshelper.AppBase;
@@ -42,11 +44,15 @@ public class BluetoothConnector {
 
     private final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
+    private Activity connectingToBluetooth;
+
     /*----------------------------------------------------------------------*/
     /*Constructor*/
-    public BluetoothConnector(Context context, String address) {
+
+    public BluetoothConnector(Context context, Activity activity, String address) {
         this.context = context.getApplicationContext();
         this.address = address;
+        connectingToBluetooth = activity;
         connectBT();
     }
 
@@ -174,12 +180,12 @@ public class BluetoothConnector {
     private class ConnectBT extends AsyncTask<Void, Void, Void>  // UI thread
     {
         private boolean ConnectSuccess = true; //if it's here, it's almost connected
+        private ProgressDialog progress;
 
         /*----------------------------------------------------------------------*/
         @Override
         protected void onPreExecute() {
-            msg("Connecting...", 1);//todo -  progress bar
-            //ProgressDialog progress = ProgressDialog.show(context, "Connecting...", "Please wait!!!");  //show a progress dialog
+            progress = ProgressDialog.show(connectingToBluetooth, "Connecting to Bluetooth...", "Please wait!!!");  //show a progress dialog
         }
 
         /*----------------------------------------------------------------------*/
@@ -212,7 +218,8 @@ public class BluetoothConnector {
                 msg("Connected.", 1);
                 AppBase.INSTANCE.isBluetoothConnected = true;
             }
-            //progress.dismiss();//todo progress bar
+            progress.dismiss();//todo progress bar
+            connectingToBluetooth.finish();
 
         }
     }
@@ -233,8 +240,8 @@ public class BluetoothConnector {
 
             try {
                 btSocket.close();
-                AppBase.INSTANCE.isBluetoothConnected=false;
-                msg("Disconnected", 1);
+                AppBase.INSTANCE.isBluetoothConnected = false;
+                //msg("Disconnected", 1);
             } catch (IOException e) {
 
                 e.printStackTrace();

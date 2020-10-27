@@ -2,6 +2,7 @@ package com.example.alshelper;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,7 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-
+import android.widget.ProgressBar;
 
 import com.example.alshelper.bluetoothUtils.*;
 import com.example.alshelper.sensors.*;
@@ -24,59 +25,42 @@ public class MainActivity extends AppCompatActivity {
 
 
     private ImageView bt;
-    Button connectBT;
-    Button disconnect;
-    Button sensors;
-    Button form;
+
+    private Button connectBT;
+
+    private Button disconnect;
+
+    private Button sensors;
+
+    private Button form;
+
     private Menu menu = null;
+
     private SharedPreferences sharedPreferences;
 
-    public void connectBT() {
-        Intent intent = new Intent(this, PairedDevicesList.class);
-        startActivity(intent);
-    }
 
-    private void diconnectBT() {
-        Log.i("DISCCONCT", "bla");
-        AppBase.INSTANCE.bluetoothConnector.disconnectBT();
-        bt.animate().alpha(0.1f).setDuration(500);
-        connectBT.setEnabled(true);
-        disconnect.setEnabled(false);
-        //form.setEnabled(false);
-        sensors.setEnabled(false);
-    }
-
-    public void createHelpingSystem(View v) {
-        Intent intent = new Intent(this, Form.class);
-        startActivity(intent);
-    }
-
-    public void goToSensorMenu(View v) {
-        if (AppBase.INSTANCE.isBluetoothConnected) {
-            Intent intent = new Intent(this, SensorMenu.class);
-            startActivity(intent);
-        }
-    }
-
-
+    /*onCreate
+     *
+     *
+     * */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        Context context;
+        //Getting the shard prefrences object
         sharedPreferences = getSharedPreferences(
-                getPackageName()+"_preferences", Context.MODE_PRIVATE);
+                getPackageName() + "_preferences", Context.MODE_PRIVATE);
+
+        //Setting all the views in layout
         bt = (ImageView) findViewById(R.id.bluetoothImageView);
         bt.setAlpha(0.1f);
+
         connectBT = findViewById(R.id.connectButton);
         disconnect = findViewById(R.id.disconnectButton);
         form = findViewById(R.id.formBtn);
         sensors = findViewById(R.id.sensorsButton);
-
         disconnect.setEnabled(false);
-        // form.setEnabled(false);
         sensors.setEnabled(false);
 
 
@@ -106,10 +90,45 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void connectBT() {
+        Intent intent = new Intent(this, PairedDevicesList.class);
+        startActivity(intent);
+    }
+
+    public void diconnectBT() {
+        Log.i("DISCCONCT", "bla");
+        AppBase.INSTANCE.bluetoothConnector.disconnectBT();
+        bt.animate().alpha(0.1f).setDuration(500);
+        connectBT.setEnabled(true);
+        disconnect.setEnabled(false);
+        //form.setEnabled(false);
+        sensors.setEnabled(false);
+    }
+
+    public void createHelpingSystem(View v) {
+        Intent intent = new Intent(this, Form.class);
+        startActivity(intent);
+    }
+
+    public void goToSensorMenu(View v) {
+        if (AppBase.INSTANCE.isBluetoothConnected) {
+            Intent intent = new Intent(this, SensorMenu.class);
+            startActivity(intent);
+        }
+    }
+
+    /**
+     *
+     */
     @Override
     protected void onResume() {
         super.onResume();
-        if (AppBase.INSTANCE.bluetoothConnector != null) {
+        if (AppBase.INSTANCE.isBluetoothConnected == true) {
+
+            MenuItem item = menu.findItem(R.id.bluetoothItem);
+            item.setIcon(R.drawable.ic_baseline_bluetooth_connected_24);
+
+
             bt.animate().alpha(1f).setDuration(2000);
             disconnect.setEnabled(true);
             //form.setEnabled(true);
@@ -118,8 +137,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         boolean debugMode = sharedPreferences.getBoolean("debug_mode", false);
-        Log.i("Debug mode",String.valueOf(debugMode));
-        if(menu!=null){
+        Log.i("Debug mode", String.valueOf(debugMode));
+        if (menu != null) {
             if (debugMode) {
                 showOption(R.id.terminalItem);
             } else {
@@ -129,7 +148,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    /*
+     *        MENU!!
+     *
+     * */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -137,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
         boolean debugMode = sharedPreferences.getBoolean("debug_mode", false);
-        Log.i("Debug mode",String.valueOf(debugMode));
+        Log.i("Debug mode", String.valueOf(debugMode));
         if (debugMode) {
             showOption(R.id.terminalItem);
         } else {
@@ -168,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
                     connectBT();
                 } else {
                     diconnectBT();
+                    item.setIcon(R.drawable.bluetooth_disabled);
                 }
                 return true;
             case R.id.terminalItem:
