@@ -66,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         Context context;
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences = getSharedPreferences(
+                getPackageName()+"_preferences", Context.MODE_PRIVATE);
         bt = (ImageView) findViewById(R.id.bluetoothImageView);
         bt.setAlpha(0.1f);
         connectBT = findViewById(R.id.connectButton);

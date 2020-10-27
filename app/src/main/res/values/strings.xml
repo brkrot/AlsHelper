@@ -1,15 +1,18 @@
 <resources>
     <string name="app_name">AlsHelper</string>
 
-    <string name="choose_sensor">Choose the suitable Sensor From The list</string>
+    <string name="sensor_choose">Choose the suitable Sensor\n From The list below:</string>
+
+    <string name="sensor_blank">Choose your sensor!</string>
     <string name="sensor_joystick">Joystick</string>
     <string name="sensor_potentiometer">Potentiometer</string>
     <string name="sensor_button">Button</string>
     <string name="sensor_name_magnet">Magnet</string>
-    <string name="insert_name">Please insert the patient name</string>
+    <string name="insert_name">Patient name:</string>
 
     <string name="chosen_action_for_arduino">Chosen_action_for_arduino</string>
 
+    <string name="action_blank">Choose action here!</string>
     <string name="action_light_on">Turn light on</string>
     <string name="action_light_off">Turn light off</string>
     <string name="action_ac_on">Turn Air Condition On</string>
@@ -18,6 +21,7 @@
     <string name="action_dial_number">dial</string>
     <string name="action_7">a7</string>
 
+    <string name="actionCode_blank">//</string>
     <string name="actionCode_light_on">//lightOn();</string>
     <string name="actionCode_light_off">//lightOff();</string>
     <string name="actionCode_ac_on">turnAC(1);</string>

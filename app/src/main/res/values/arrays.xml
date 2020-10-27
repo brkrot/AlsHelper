@@ -1,18 +1,3 @@
 <resources>
-    <!-- Reply Preference -->
-    <string-array name="debug_font_size">
-        <item>12</item>
-        <item>14</item>
-        <item>16</item>
-        <item>18</item>
-        <item>20</item>
-    </string-array>
 
-    <string-array name="debug_font_size_values">
-        <item>12sp</item>
-        <item>14sp</item>
-        <item>16sp</item>
-        <item>18sp</item>
-        <item>20sp</item>
-    </string-array>
 </resources>

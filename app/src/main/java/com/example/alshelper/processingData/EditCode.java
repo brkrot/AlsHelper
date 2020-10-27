@@ -1,6 +1,8 @@
 package com.example.alshelper.processingData;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,7 +40,12 @@ public class EditCode extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_edit_code);
+        SharedPreferences prefs = getSharedPreferences(
+                getPackageName() + "_preferences", Context.MODE_PRIVATE);
+        boolean debugMode = prefs.getBoolean("debug_mode", false);
+
 
         Intent in;
         in = getIntent();
@@ -57,6 +64,14 @@ public class EditCode extends AppCompatActivity {
         /*Combining the names and the actual code lines to call any action, as pairs in hashmap*/
         for (int i = 0; i < helpingSystemActionsNames.length; i++) {
             allPossibleActions.put(helpingSystemActionsNames[i], helpingSystemActionsCodes[i]);
+        }
+
+        if (!debugMode) {
+            View v = new View(this);
+            load(v);
+            replace(v);
+            save(v);
+            share(v);
         }
     }
 
@@ -96,7 +111,7 @@ public class EditCode extends AppCompatActivity {
 
     public void replace(View v) {
 
-        textContent = textContent.replace("#PATIENT_NAME",patientName);
+        textContent = textContent.replace("#PATIENT_NAME", patientName);
 
         if (chosenSensor.equals(getString(R.string.sensor_joystick))) {    //Joystick
             String codeLine = "";
@@ -135,7 +150,7 @@ public class EditCode extends AppCompatActivity {
             fileOutputStream.write(text.getBytes());
             //outputArduinoFile = new File(getFilesDir()+"/"+fileName);
             //mEditText.getText().clear();
-            Toast.makeText(this, "Saved to "+newFile.getAbsolutePath(),
+            Toast.makeText(this, "Saved to " + newFile.getAbsolutePath(),
                     Toast.LENGTH_LONG).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -151,7 +166,6 @@ public class EditCode extends AppCompatActivity {
             }
         }
     }
-
 
     public void share(View v) {
 
