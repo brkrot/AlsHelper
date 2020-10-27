@@ -6,67 +6,74 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/connectButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Connect To BT"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/bluetoothImageView"
-        android:layout_width="187dp"
-        android:layout_height="189dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:alpha="0.5"
-        app:layout_constraintBottom_toTopOf="@+id/connectButton"
+        app:layout_constraintBottom_toTopOf="@+id/allButtons"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bt" />
 
-    <Button
-        android:id="@+id/formBtn"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/allButtons"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="createHelpingSystem"
-        android:text="create Helping System"
-        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/connectButton"
-        app:layout_constraintVertical_bias="0.377" />
+        app:layout_constraintTop_toBottomOf="@id/bluetoothImageView"
+        app:layout_constraintVertical_bias="0.789"
+        android:orientation="vertical"
+        android:layout_margin="30dp">
 
-    <Button
-        android:id="@+id/disconnectButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Disconnect"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/formBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/connectButton" />
+        <Button
+            android:id="@+id/disconnectButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            android:padding="10dp"
+            android:text="Disconnect"
+            android:textSize="24sp"
+            android:layout_marginTop="25dp"/>
 
-    <Button
-        android:id="@+id/sensorsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="goToSensorMenu"
-        android:text="Sensor menu"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/formBtn"
-        app:layout_constraintVertical_bias="0.179" />
+        <Button
+            android:id="@+id/connectButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            android:padding="10dp"
+            android:text="Connect To BT"
+            android:textSize="24sp"
+            android:layout_marginTop="25dp"/>
+
+        <Button
+            android:id="@+id/formBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            android:onClick="createHelpingSystem"
+            android:padding="10dp"
+            android:text="create Helping System"
+            android:textSize="24sp"
+            android:layout_marginTop="25dp"/>
+
+        <Button
+            android:id="@+id/sensorsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            android:onClick="goToSensorMenu"
+            android:padding="10dp"
+            android:text="Sensor menu"
+            android:textSize="24sp"
+            android:layout_marginTop="25dp"/>
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
