@@ -2,7 +2,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#444444"
     android:orientation="vertical">
 
     <ScrollView
@@ -20,13 +19,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
-            android:background="#444444"
-
+            android:background="@drawable/border"
             android:gravity="right"
             android:hint="text"
             android:imeOptions="actionSend"
             android:textAlignment="gravity"
-            android:textColor="@color/colorMatrix"
+            android:textColor="#111111"
             android:textSize="14sp" />
     </ScrollView>
 
@@ -35,7 +33,7 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#AAAAAA"
+        android:background="@drawable/border"
         android:orientation="horizontal"
         android:weightSum="5"
         app:layout_constraintBottom_toBottomOf="parent">
@@ -47,20 +45,21 @@
             android:layout_weight="3"
             android:imeOptions="actionSend" />
 
-
         <Button
             android:id="@+id/send_button"
-            android:layout_width="40dp"
+            android:layout_width="30dp"
             android:layout_height="40dp"
             android:layout_weight="1"
+            android:background="@drawable/border"
             android:onClick="send"
             android:text="send" />
 
         <Button
             android:id="@+id/stop_button"
-            android:layout_width="40dp"
+            android:layout_width="30dp"
             android:layout_height="40dp"
             android:layout_weight="1"
+            android:background="@drawable/border"
             android:onClick="stop"
             android:text="Stop!" />
     </LinearLayout>

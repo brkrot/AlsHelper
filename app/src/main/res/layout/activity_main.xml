@@ -40,7 +40,7 @@
             android:padding="10dp"
             android:text="Disconnect"
             android:textSize="24sp"
-            android:layout_marginTop="25dp"/>
+            android:layout_marginTop="25dp" />
 
         <Button
             android:id="@+id/connectButton"

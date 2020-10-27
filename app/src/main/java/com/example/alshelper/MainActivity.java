@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.alshelper.bluetoothUtils.*;
 import com.example.alshelper.sensors.*;
@@ -194,8 +195,12 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return true;
             case R.id.terminalItem:
-                intent = new Intent(this, Terminal.class);
-                startActivity(intent);
+                if (AppBase.INSTANCE.isBluetoothConnected) {
+                    intent = new Intent(this, Terminal.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(this,"You should \n connect to Bluetooth first!",Toast.LENGTH_SHORT).show();
+                }
                 return true;
             case R.id.MakeCodeItem:
                 intent = new Intent(this, Form.class);

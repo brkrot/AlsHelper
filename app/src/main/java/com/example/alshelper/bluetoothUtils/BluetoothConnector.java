@@ -33,7 +33,7 @@ public class BluetoothConnector {
     private ExecutorService executor = Executors.newSingleThreadExecutor();
 
     // todo LEARN - atomic boolean
-    private AtomicBoolean isReadingData = new AtomicBoolean(false);
+    public AtomicBoolean isReadingData = new AtomicBoolean(false);
 
     /*private*//*todo is it sould be public? what indicator do i have to bluetooth connection?*/
     public BluetoothSocket btSocket = null;
@@ -45,6 +45,8 @@ public class BluetoothConnector {
     private final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     private Activity connectingToBluetooth;
+
+    private InputStream inputStream = null;
 
     /*----------------------------------------------------------------------*/
     /*Constructor*/
@@ -76,7 +78,10 @@ public class BluetoothConnector {
                     return;
                 }
 
-                try (InputStream inputStream = btSocket.getInputStream()) {
+                try {
+                    if (inputStream == null) {
+                        inputStream = btSocket.getInputStream();
+                    }
                     readDataOnceAndScheduleFuture(inputStream);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -91,11 +96,11 @@ public class BluetoothConnector {
         String incomingData = null;
 
         if (isReadingData.get() != true) {
-            try {
+            /*try {
                 inputStream.close(); // todo ERR catch exceptions ...
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
             return;
         }
 

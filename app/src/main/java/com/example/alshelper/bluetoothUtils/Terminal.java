@@ -19,15 +19,16 @@ public class Terminal extends AppCompatActivity {
     BroadcastReceiver receiver = null;
     TextView outputTextView;
     EditText sendText;
-String input;
+    String input;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_terminal);
-        input="";
+        input = "";
 
-        sendText = (EditText)findViewById(R.id.sendText);
-        outputTextView = (TextView)findViewById(R.id.textView1);
+        sendText = (EditText) findViewById(R.id.sendText);
+        outputTextView = (TextView) findViewById(R.id.textView1);
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -46,29 +47,27 @@ String input;
     }
 
 
-
-
-    private void drawOnUi(String data){
-        try{
-            if(!data.equals("")){
-                input+=data+"\n";
+    private void drawOnUi(String data) {
+        try {
+            if (!data.equals("")) {
+                input += data + "\n";
             }
 
             outputTextView.setText(input);
-            } catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
-/*
-    public void send(View v){
+
+    public void send(View v) {
         AppBase.INSTANCE.bluetoothConnector.writeToArduino(sendText.getText().toString());
-        if(AppBase.INSTANCE.bluetoothConnector.isReadindData()!=true) {
-           AppBase.INSTANCE.bluetoothConnector.readDataRepeating();
+        if (!AppBase.INSTANCE.bluetoothConnector.isReadingData.get()) {
+            AppBase.INSTANCE.bluetoothConnector.readDataRepeating();
 //            input = AppBase.INSTANCE.bluetoothConnector.readOnce();
 //            outputTextView.setText(input);
         }
     }
-*/
+
     public void stop(View v) {
         // call the superclass method first
         super.onStop();
