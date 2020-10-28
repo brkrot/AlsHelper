@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- By default progressbar -->
+    <item android:id="@android:id/background">
+        <shape>
+            <corners android:radius="5dip" />
+
+            <solid android:color="#FFFFFF" />
+
+            <stroke
+                android:width="1dp"
+                android:color="#FF000000" />
+        </shape>
+    </item>
+
+    <!-- on Progress Update -->
+    <item android:id="@android:id/progress">
+        <clip
+            android:clipOrientation="vertical"
+            android:gravity="bottom" >
+            <shape>
+                <corners android:radius="5dip" />
+
+                <!-- Color to be shown on progressbar update -->
+                <solid android:color="#2196F3" />
+
+                <stroke
+                    android:width="1dp"
+                    android:color="#FF000000" />
+            </shape>
+        </clip>
+    </item>
+
+</layer-list>

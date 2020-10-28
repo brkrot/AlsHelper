@@ -25,6 +25,17 @@
             android:text="ANALOG SENSOR"
             android:textColor="@android:color/holo_red_dark"
             android:textSize="36sp" />
+    <TableRow
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/levelDown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeLevel"
+            android:text="LOWER LEVEL" />
 
         <Button
             android:id="@+id/startButton"
@@ -33,21 +44,15 @@
             android:text="start"
             android:textSize="14sp" />
 
+        <Button
+            android:id="@+id/levelUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeLevel"
+            android:text="UPER LEVEL" />
+    </TableRow>
+
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/greendot"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:translationZ="90dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"
-        app:layout_constraintEnd_toStartOf="@+id/guideline5"
-        app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toTopOf="@+id/guideline2"
-        app:srcCompat="@drawable/greendot" />
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
@@ -55,18 +60,45 @@
         android:background="@drawable/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/black" />
+
+    <ProgressBar
+        android:id="@+id/vertical_progressbar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="48dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:progressDrawable="@drawable/vertical_progressbar"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/verticalprogress_percentage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:elevation="5dp"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.21" />
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -100,16 +132,15 @@
         android:id="@+id/outputTextView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="48dp"
         android:gravity="center_horizontal|center_vertical"
         android:text="Press START!"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="@+id/greendot"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+        app:layout_constraintTop_toBottomOf="@+id/vertical_progressbar" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

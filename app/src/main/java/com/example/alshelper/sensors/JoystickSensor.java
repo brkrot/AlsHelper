@@ -1,13 +1,18 @@
 package com.example.alshelper.sensors;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +29,12 @@ public class JoystickSensor extends AppCompatActivity {
     BroadcastReceiver receiver = null;
 
     private TextView outputTextView;
+    private ImageView target1;
+    private ImageView target2;
+    private ImageView target3;
+    private ImageView dot;
+    private ImageView axis;
+    private ObjectAnimator dotAnim;
 
  /*##################
 # STATIC VARIABLES #
@@ -44,16 +55,16 @@ public class JoystickSensor extends AppCompatActivity {
 
     static float AXIS_CENTER_Y = 0;
 
-    static int DOT_WIDTH = 30;//this is a default value, we will change it when click start bottom /change level / restart
+    static int DOT_WIDTH = 30;//this is a default value, we will change it when click start bottom
 
-    static int SCREEN_WIDTH = 720;//this is a default value we will change it when click start bottom /change level / restart
+    static int SCREEN_WIDTH = 720;//this is a default value we will change it when click start bottom
 
-    static int JOYSTICK_NORMALIZE_FACTOR_PER_SCREEN_SIZE = 20;//this is a default value we will change it when click start bottom /change level / restart
+    static int JOYSTICK_NORMALIZE_FACTOR_PER_SCREEN_SIZE = 20;//this is a default value we will change it when click start bottom
 
     //# GLOBAL VARIABLES that will change more than 1 time #
     static double targetFactor = 1;
 
-    static  int[] DataCollector = new int[]{1,2,3,4,5};
+    static  int[] DataCollector = new int[]{0,0,0,0,0};
 
     static int currentLevel = 2;
 
@@ -69,9 +80,6 @@ public class JoystickSensor extends AppCompatActivity {
 
     static  boolean joystickRested = false;
 
-    DiagnosisDataCollector diagnosticData = new DiagnosisDataCollector();
-
-
 /*############
 #  METHODS   #
 ##############*/
@@ -85,9 +93,6 @@ public class JoystickSensor extends AppCompatActivity {
     public void changeLevel(View view)
     {
         if(startIndication) {
-            ImageView target1 = (ImageView) findViewById(R.id.target1);
-            ImageView target2 = (ImageView) findViewById(R.id.target2);
-            ImageView target3 = (ImageView) findViewById(R.id.target3);
             if (view.getId() == R.id.levelDown & currentLevel > 1) {
                 targetFactor = target1.getWidth() * CHANGE_LEVEL_FACTOR;
                 currentLevel--;
@@ -132,12 +137,12 @@ public class JoystickSensor extends AppCompatActivity {
      * @param xProgress
      * @param yProgress
      */
+    @SuppressLint("WrongConstant")
     public void moveTheDot(int xProgress, int yProgress)
     {
         twoCloseClicks = false;
         float xLocationOfDot;
         float yLocationOfDot;
-        ImageView dot = (ImageView) findViewById(R.id.dot);
         float axisWidth = SCREEN_WIDTH;
         xLocationOfDot = dot.getX() + DOT_WIDTH/2;
         yLocationOfDot = dot.getY() + DOT_WIDTH/2;
@@ -160,9 +165,6 @@ public class JoystickSensor extends AppCompatActivity {
                 tFirst = System.currentTimeMillis();
                 joystickRested = false;
             }
-            ImageView target1 = (ImageView) findViewById(R.id.target1);
-            ImageView target2 = (ImageView) findViewById(R.id.target2);
-            ImageView target3 = (ImageView) findViewById(R.id.target3);
             if(hitting_the_target(dotX, dotY, target1) || hitting_the_target(dotX, dotY, target2) || hitting_the_target(dotX, dotY, target3) || twoCloseClicks){
                 if (twoCloseClicks){
                     DataCollector[4] = 1;
@@ -181,6 +183,10 @@ public class JoystickSensor extends AppCompatActivity {
                     }
                 }
                 Toast.makeText(getApplicationContext(),"GOOOOD!",Toast.LENGTH_SHORT).show();
+                dotAnim.setDuration(1500);
+                dotAnim.setEvaluator(new ArgbEvaluator());
+                dotAnim.setRepeatMode(Animation.REVERSE);
+                dotAnim.start();
                 final MediaPlayer win = MediaPlayer.create(this, R.raw.hit_the_target);
                 win.start();
             }
@@ -238,10 +244,6 @@ public class JoystickSensor extends AppCompatActivity {
     {
         if(startIndication) {
             AppBase.INSTANCE.bluetoothConnector.readDataRepeating();
-            ImageView target1 = (ImageView) findViewById(R.id.target1);
-            ImageView target2 = (ImageView) findViewById(R.id.target2);
-            ImageView target3 = (ImageView) findViewById(R.id.target3);
-            ImageView dot = (ImageView) findViewById(R.id.dot);
             if (targetFactor == 1) {
                 targetFactor = target2.getWidth();
             }
@@ -283,8 +285,13 @@ public class JoystickSensor extends AppCompatActivity {
         findViewById(R.id.startButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageView dot = (ImageView) findViewById(R.id.dot);
-                ImageView axis = (ImageView) findViewById(R.id.xyAxis);
+                dot = (ImageView) findViewById(R.id.dot);
+                axis = (ImageView) findViewById(R.id.xyAxis);
+                target1 = (ImageView) findViewById(R.id.target1);
+                target2 = (ImageView) findViewById(R.id.target2);
+                target3 = (ImageView) findViewById(R.id.target3);
+                dotAnim = ObjectAnimator.ofInt(dot, "backgroundColor", Color.TRANSPARENT, Color.YELLOW,
+                        Color.TRANSPARENT);
                 DOT_WIDTH = dot.getWidth();
                 SCREEN_WIDTH = axis.getWidth();
                 AXIS_CENTER_X = axis.getX() + SCREEN_WIDTH/2;
@@ -311,16 +318,16 @@ public class JoystickSensor extends AppCompatActivity {
         for (int i=1;i<5;i++){
             switch (i){
                 case(1):
-                    diagnosticData.dataMap.put("combine vertical and horizonal ability", DataCollector[i]);
+                    AppBase.INSTANCE.diagnosticData.dataMap.put("combine vertical and horizonal ability", DataCollector[i]);
                     break;
                 case(2):
-                    diagnosticData.dataMap.put("vertical ability", DataCollector[i]);
+                    AppBase.INSTANCE.diagnosticData.dataMap.put("vertical ability", DataCollector[i]);
                     break;
                 case(3):
-                    diagnosticData.dataMap.put("horizonal ability", DataCollector[i]);
+                    AppBase.INSTANCE.diagnosticData.dataMap.put("horizonal ability", DataCollector[i]);
                     break;
                 case(4):
-                    diagnosticData.dataMap.put("Two clicks ability", DataCollector[i]);
+                    AppBase.INSTANCE.diagnosticData.dataMap.put("Two clicks ability", DataCollector[i]);
                     break;
             }
         }

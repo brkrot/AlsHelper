@@ -19,6 +19,10 @@ public class OnOffSensorActivity extends AppCompatActivity {
     BroadcastReceiver receiver = null;
 
     private TextView outputTextView;
+    private ImageView greenDot;
+    private ImageView redDot;
+
+    static  int[] DataCollector = new int[]{1,2,3};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,8 @@ public class OnOffSensorActivity extends AppCompatActivity {
         findViewById(R.id.startButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                greenDot = (ImageView) findViewById(R.id.greendot);
+                redDot = (ImageView) findViewById(R.id.redDot);
                 AppBase.INSTANCE.bluetoothConnector.writeToArduino("S2");
                 AppBase.INSTANCE.bluetoothConnector.readDataRepeating();
             }
@@ -52,24 +58,26 @@ public class OnOffSensorActivity extends AppCompatActivity {
 
     private void drawOnUi(String data){
         try{
-            ImageView greenDot = (ImageView) findViewById(R.id.greendot);
-            ImageView redDot = (ImageView) findViewById(R.id.redDot);
             String[] extractData = data.split("#");
-            if ("1".equals(extractData[0]) || "1".equals(extractData[1])){
-                Log.i("the botton values is: ", "botton need to be GREEN" + extractData[1]);
-                greenDot.setVisibility(View.VISIBLE);
-                redDot.setVisibility(View.INVISIBLE);
-            }
-            else{
-                Log.i("the botton values is: ", "botton need to be RED" + extractData[1]);
-                redDot.setVisibility(View.VISIBLE);
-                greenDot.setVisibility(View.INVISIBLE);
-            }
+            change_bottom_color(extractData);
             outputTextView.setText(data);
 
         }
         catch (Exception e){
 
+        }
+    }
+
+    private void change_bottom_color(String[] extractData) {
+        if ("1".equals(extractData[0]) || "1".equals(extractData[1])){
+            Log.i("the botton values is: ", "botton need to be GREEN" + extractData[1]);
+            greenDot.setVisibility(View.VISIBLE);
+            redDot.setVisibility(View.INVISIBLE);
+        }
+        else{
+            Log.i("the botton values is: ", "botton need to be RED" + extractData[1]);
+            redDot.setVisibility(View.VISIBLE);
+            greenDot.setVisibility(View.INVISIBLE);
         }
     }
 }
