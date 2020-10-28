@@ -4,69 +4,85 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#111111"
     tools:context=".processingData.EditCode">
 
     <EditText
         android:id="@+id/edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:background="#111111"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/border"
         android:gravity="left"
         android:hint="The\ntext\nshould\nbe\nin\nhere"
+        android:padding="5dp"
         android:textColor="@color/colorMatrix"
-        android:textColorHint="@color/colorMatrix"
+        android:textColorHint="#111111"
         android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <LinearLayout
+        <Button
+            android:id="@+id/button_load"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_marginTop="12dp"
+            android:background="@drawable/border"
+            android:onClick="load"
+            android:padding="10dp"
+            android:text="Show source"
+            android:textSize="16sp" />
 
-            <Button
-                android:id="@+id/button_save"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:onClick="save"
-                android:text="save new file" />
+        <Button
+            android:id="@+id/button_change"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/button_save"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/border"
+            android:onClick="replace"
+            android:padding="10dp"
+            android:text="Change code"
+            android:textSize="16sp" />
 
-            <Button
-                android:id="@+id/button_load"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:onClick="load"
-                android:text="Show source" />
+        <Button
+            android:id="@+id/button_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/border"
+            android:onClick="save"
+            android:padding="10dp"
+            android:text="save new file"
+            android:textSize="16sp" />
 
-            <Button
-                android:id="@+id/button_change"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/button_save"
-                android:layout_marginTop="16dp"
-                android:onClick="replace"
-                android:text="Change code" />
-
-            <Button
-                android:id="@+id/button_change2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/button_save"
-                android:layout_marginTop="16dp"
-                android:onClick="share"
-                android:text="Share" />
-        </LinearLayout>
-    </ScrollView>
+        <Button
+            android:id="@+id/button_change2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/button_save"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/border"
+            android:onClick="share"
+            android:padding="10dp"
+            android:text="Share"
+            android:textSize="16sp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,47 +10,64 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="20dp"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp"
+        android:layout_margin="20sp"
+        android:background="@drawable/border">
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/holo_red_dark"
+            android:textColor="@color/colorPrimary"
             android:textSize="36sp"
-            android:text="SENSOR MENU" />
+            android:text="Sensor Menu" />
 
         <Button
             android:id="@+id/button1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="chooseSensor"
             android:tag="3"
-            android:text="On/Off sensor" />
+            android:text="On/Off sensor"
+            android:textSize="16sp"
+            android:background="@drawable/border"
+            android:layout_marginTop="15dp"/>
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="chooseSensor"
             android:tag="1"
-            android:text="Joystick sensor" />
+            android:text="Joystick sensor"
+            android:textSize="16sp"
+            android:background="@drawable/border"
+            android:layout_marginTop="15dp"/>
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="chooseSensor"
             android:tag="2"
-            android:text="Distance sensor" />
+            android:text="Distance sensor"
+            android:textSize="16sp"
+            android:background="@drawable/border"
+            android:layout_marginTop="15dp"/>
 
         <Button
             android:id="@+id/button4"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="chooseSensor"
             android:tag="4"
-            android:text="ANALOG SENSOR" />
+            android:text="ANALOG SENSOR"
+            android:textSize="16sp"
+            android:background="@drawable/border"
+            android:layout_marginTop="15dp"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

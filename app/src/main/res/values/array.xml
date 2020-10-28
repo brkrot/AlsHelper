@@ -2,6 +2,7 @@
 <resources>
 
     <string-array name="spinnerChooseSensor">
+        <item>@string/sensor_blank</item>
         <item>@string/sensor_joystick</item>
         <item>@string/sensor_potentiometer</item>
         <item>@string/sensor_button</item>
@@ -9,6 +10,8 @@
     </string-array>
 
     <string-array name="helpingSystemActions">
+
+        <item>@string/action_blank</item>
         <item>@string/action_light_on</item>
         <item>@string/action_light_off</item>
         <item>@string/action_ac_on</item>
@@ -19,6 +22,8 @@
     </string-array>
 
     <string-array name="helpingSystemActionsCodes">
+
+        <item>@string/actionCode_blank</item>
         <item>@string/actionCode_light_on</item>
         <item>@string/actionCode_light_off</item>
         <item>@string/actionCode_ac_on</item>
@@ -26,5 +31,24 @@
         <item>@string/actionCode_ring_bell</item>
         <item>@string/actionCode_dial_number</item>
         <item>@string/actionCode_7</item>
+    </string-array>
+
+
+
+    <!-- Reply Preference -->
+    <string-array name="debug_font_size">
+        <item>12</item>
+        <item>14</item>
+        <item>16</item>
+        <item>18</item>
+        <item>20</item>
+    </string-array>
+
+    <string-array name="debug_font_size_values">
+        <item>12sp</item>
+        <item>14sp</item>
+        <item>16sp</item>
+        <item>18sp</item>
+        <item>20sp</item>
     </string-array>
 </resources>

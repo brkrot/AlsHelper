@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/bluetoothItem"
+        android:icon="@drawable/bluetooth_disabled"
+        android:title="Bluetooth"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/terminalItem"
+        android:icon="@drawable/bug"
+        android:title="Terminal"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/SensorMenuItem"
+        android:icon="@drawable/ic_baseline_device_hub_24"
+        android:title="Sensor Menu"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/MakeCodeItem"
+        android:icon="@drawable/create"
+        android:title="Make Code"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/settingsItem"
+        android:icon="@drawable/settings"
+        android:title="Settings"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/aboutItem"
+        android:icon="@drawable/about"
+        android:title="About" />
+</menu>
