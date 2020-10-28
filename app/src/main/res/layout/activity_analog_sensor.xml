@@ -16,15 +16,18 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView">
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        android:layout_margin="15dp">
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ANALOG SENSOR"
-            android:textColor="@android:color/holo_red_dark"
-            android:textSize="36sp" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="36sp"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"/>
     <TableRow
         android:gravity="center_horizontal"
         android:layout_width="match_parent"
@@ -35,21 +38,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="changeLevel"
-            android:text="LOWER LEVEL" />
+            android:text="LOWER LEVEL"
+            android:background="@drawable/border"
+            android:padding="10dp"
+            android:layout_marginStart="10dp"
+            android:paddingEnd="10dp"/>
 
         <Button
             android:id="@+id/startButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="start"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:background="@drawable/border"
+            android:padding="10dp"
+            android:layout_marginStart="10dp"
+            android:paddingEnd="10dp"/>
 
         <Button
             android:id="@+id/levelUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="changeLevel"
-            android:text="UPER LEVEL" />
+            android:text="UPER LEVEL"
+            android:background="@drawable/border"
+            android:padding="10dp"
+            android:layout_marginStart="10dp"
+            android:paddingEnd="10dp"/>
     </TableRow>
 
     </LinearLayout>
@@ -64,12 +79,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/black" />
+        app:srcCompat="@drawable/border" />
 
     <ProgressBar
         android:id="@+id/vertical_progressbar"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="48dp"
+        android:layout_width="80dp"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:progressDrawable="@drawable/vertical_progressbar"
@@ -77,8 +92,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@id/guideline"/>
 
     <TextView
         android:id="@+id/verticalprogress_percentage"
@@ -97,7 +111,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.21" />
+        app:layout_constraintGuide_percent="0.30" />
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -105,14 +119,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.65" />
+        app:layout_constraintGuide_percent="0.85" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.85" />
+        app:layout_constraintGuide_percent="0.95" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
@@ -134,13 +148,12 @@
         android:layout_height="0dp"
         android:gravity="center_horizontal|center_vertical"
         android:text="Press START!"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="36sp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toBottomOf="@+id/vertical_progressbar" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

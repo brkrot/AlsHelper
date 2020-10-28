@@ -22,16 +22,21 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ON OFF SENSOR"
-            android:textColor="@android:color/holo_red_dark"
-            android:textSize="36sp" />
+            android:text="ON/OFF SENSOR"
+            android:textColor="@color/colorPrimary"
+            android:textSize="36sp"
+            android:layout_margin="15dp"
+            android:padding="10dp"/>
 
         <Button
             android:id="@+id/startButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="start"
-            android:textSize="14sp" />
+            android:textSize="18sp"
+            android:background="@drawable/border"
+            android:layout_margin="10dp"
+            android:padding="10dp"/>
 
     </LinearLayout>
 
@@ -71,7 +76,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/black" />
+        app:srcCompat="@drawable/border" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -85,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.65" />
+        app:layout_constraintGuide_percent="0.55" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"

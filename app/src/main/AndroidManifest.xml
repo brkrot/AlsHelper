@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:name=".AppBase"
@@ -13,8 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeBlue">
-
-        <activity android:name=".About"></activity>
+        <activity android:name=".processingData.TestResults"></activity>
+        <activity android:name=".HelpingActivity" />
+        <activity android:name=".About" />
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
@@ -23,7 +26,9 @@
         <activity android:name=".sensors.AnalogSensorActivity" />
         <activity android:name=".sensors.OnOffSensorActivity" />
         <activity android:name=".sensors.SensorMenu" />
-        <activity android:name=".sensors.JoystickSensor" />
+        <activity
+            android:name=".sensors.JoystickSensor"
+            android:theme="@style/AppTheme.noActionBar" />
         <activity android:name=".bluetoothUtils.Terminal" />
         <activity android:name=".bluetoothUtils.PairedDevicesList" />
         <activity android:name=".MainActivity">

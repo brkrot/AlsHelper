@@ -68,6 +68,18 @@
             android:textSize="16sp"
             android:background="@drawable/border"
             android:layout_marginTop="15dp"/>
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="chooseSensor"
+            android:tag="5"
+            android:text="Show results"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:background="@color/colorPrimary"
+            android:layout_marginTop="40dp"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

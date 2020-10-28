@@ -1,17 +1,21 @@
 package com.example.alshelper.bluetoothUtils;
 
 import android.app.Activity;
+import android.app.Application;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.alshelper.AppBase;
+import com.example.alshelper.MainActivity;
+import com.example.alshelper.processingData.Form;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -223,9 +227,22 @@ public class BluetoothConnector {
                 msg("Connected.", 1);
                 AppBase.INSTANCE.isBluetoothConnected = true;
             }
-            progress.dismiss();//todo progress bar
-            connectingToBluetooth.finish();
 
+            SharedPreferences pref =
+                    connectingToBluetooth.getSharedPreferences
+                            (connectingToBluetooth.getPackageName() + "_preferences", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString("LAST_BT_DEVICE_ADDRESS",address);
+            editor.apply();
+
+            progress.dismiss();//todo progress bar
+           if(!connectingToBluetooth.getLocalClassName().equals("MainActivity")){
+               connectingToBluetooth.finish();
+           }else {
+              /*Intent intent = new Intent(connectingToBluetooth, MainActivity.class);
+               connectingToBluetooth.finish();
+               connectingToBluetooth.startActivity(intent);*/
+           }
         }
     }
 

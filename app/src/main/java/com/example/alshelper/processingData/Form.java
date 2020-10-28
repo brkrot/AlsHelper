@@ -165,7 +165,7 @@ seperator.set
 
     }
 
-    public void  send(View v) {
+    public void send(View v) {
         ArrayList ArduinoCodeData = new ArrayList<String>();
         String chosen_sensor = spinner_sensors.getSelectedItem().toString();
 
@@ -177,16 +177,19 @@ seperator.set
             return;
         }
 
-        if(allSpinners[0].getSelectedItem().toString().equals(getString(R.string.action_blank)) ||
-                allSpinners[1].getSelectedItem().toString().equals(getString(R.string.action_blank)) ||
-                allSpinners[2].getSelectedItem().toString().equals(getString(R.string.action_blank)) ||
-                allSpinners[3].getSelectedItem().toString().equals(getString(R.string.action_blank))){
+
+        boolean areAllFiled = true;
+        for (int i = 0; i < numberOfActions; i++) {
+            if (allSpinners[i].getSelectedItem().toString().equals(getString(R.string.action_blank))) {
+                areAllFiled = false;
+            }
+        }
+        if (!areAllFiled) {
             Toast.makeText(this, "You Have to choose all the actions", Toast.LENGTH_SHORT).show();
             return;
         }
 
         for (int i = 0; i < numberOfActions; i++) {
-
             option = allSpinners[0].getSelectedItem().toString();
             ArduinoCodeData.add(option);
         }
@@ -197,6 +200,7 @@ seperator.set
         Log.i("name is", patientName.getText().toString());
         next.putExtra("PATIENT_NAME", patientName.getText().toString());
         next.putExtra("CHOSEN_SENSOR", chosen_sensor);
+        next.putExtra("NUMBER_OF_ACTIONS",numberOfActions);
         startActivity(next);
     }
 }

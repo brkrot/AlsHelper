@@ -8,26 +8,40 @@
     tools:context=".sensors.JoystickSensor">
 
     <TableLayout
-        android:layout_width="match_parent"
+        android:id="@+id/tableLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:elevation="5dp"
-        android:layout_height="match_parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TableRow
-            android:gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:paddingTop="5dp">
 
             <Button
                 android:id="@+id/restatButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/border"
                 android:onClick="restartSeek"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
                 android:text="RESTART" />
 
             <Button
                 android:id="@+id/startButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/border"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
                 android:text="start"
                 android:textSize="14sp" />
 
@@ -35,27 +49,39 @@
                 android:id="@+id/stopButton"
                 android:layout_width="100dp"
                 android:layout_height="47dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/border"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
                 android:text="stop"
                 android:textSize="14sp" />
         </TableRow>
 
         <TableRow
-            android:gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
 
             <Button
                 android:id="@+id/levelDown"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/border"
                 android:onClick="changeLevel"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
                 android:text="LOWER LEVEL" />
 
             <Button
                 android:id="@+id/levelUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/border"
                 android:onClick="changeLevel"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
                 android:text="UPER LEVEL" />
         </TableRow>
 
@@ -65,7 +91,7 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
         </TableRow>
     </TableLayout>
@@ -81,7 +107,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/black" />
+        app:srcCompat="@drawable/border" />
 
     <TextView
         android:id="@+id/outputTextView"
@@ -89,7 +115,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal|center_vertical"
         android:text="Press START!"
-        android:textColor="@android:color/holo_red_dark"
+        android:textColor="@color/colorPrimary"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toStartOf="@+id/imageView"
@@ -105,7 +131,9 @@
         app:layout_constraintEnd_toStartOf="@+id/imageView"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView">
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        android:background="@drawable/border"
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/xyAxis"
@@ -121,12 +149,12 @@
 
         <ImageView
             android:id="@+id/target1"
-            android:tag="target1"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="50dp"
             android:layout_marginRight="50dp"
+            android:tag="target1"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -135,10 +163,10 @@
 
         <ImageView
             android:id="@+id/target2"
-            android:tag="target2"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginTop="50dp"
+            android:tag="target2"
             android:visibility="visible"
             app:layout_constraintEnd_toStartOf="@+id/xyAxis"
             app:layout_constraintHorizontal_bias="0.5"
@@ -150,11 +178,11 @@
 
         <ImageView
             android:id="@+id/target3"
-            android:tag="target3"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginEnd="50dp"
             android:layout_marginRight="50dp"
+            android:tag="target3"
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/xyAxis"
             app:layout_constraintEnd_toEndOf="parent"

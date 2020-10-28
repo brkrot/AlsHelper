@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.alshelper.R;
+import com.example.alshelper.processingData.TestResults;
 
 public class SensorMenu extends AppCompatActivity {
 
@@ -29,6 +30,12 @@ public class SensorMenu extends AppCompatActivity {
                 break;
             case "4":
                 intent = new Intent(this, AnalogSensorActivity.class);
+                startActivity(intent);
+
+                break;
+
+            case "5":
+                intent = new Intent(this, TestResults.class);
                 startActivity(intent);
 
                 break;

@@ -3,6 +3,7 @@ package com.example.alshelper;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +22,8 @@ import android.widget.Toast;
 import com.example.alshelper.bluetoothUtils.*;
 import com.example.alshelper.sensors.*;
 import com.example.alshelper.processingData.Form;
+
+import java.sql.PreparedStatement;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -124,17 +127,38 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (AppBase.INSTANCE.isBluetoothConnected == true) {
-
-            MenuItem item = menu.findItem(R.id.bluetoothItem);
-            item.setIcon(R.drawable.ic_baseline_bluetooth_connected_24);
+        Log.i("onResume", "Started");
+        if (!AppBase.INSTANCE.isBluetoothConnected ) {/*
 
 
-            bt.animate().alpha(1f).setDuration(2000);
-            disconnect.setEnabled(true);
-            //form.setEnabled(true);
-            sensors.setEnabled(true);
-            connectBT.setEnabled(false);
+            BluetoothAdapter myBluetooth = BluetoothAdapter.getDefaultAdapter();
+            if (myBluetooth == null) {
+                //Show a mensag. that the device has no bluetooth adapter
+                Toast.makeText(getApplicationContext(), "Bluetooth Device Not found", Toast.LENGTH_LONG).show();
+
+                //finish();
+            } else if (!myBluetooth.isEnabled()) {
+                //Ask to the user turn the bluetooth on
+                Intent turnBTon = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(turnBTon, 1);
+            }
+
+
+            Log.i("BT", "is not conected");
+            boolean rememberLastDevice = sharedPreferences.getBoolean("rememberLastBTDevice", false);
+            if (rememberLastDevice) {
+                String address = sharedPreferences.getString("LAST_BT_DEVICE_ADDRESS", null);
+                if (address != null) {
+                    BluetoothConnector bluetoothConnector = new BluetoothConnector(this, this, address);
+                    AppBase.INSTANCE.bluetoothConnector = bluetoothConnector;
+
+
+                }
+            }
+
+        */} else {
+
+            updateUI();
         }
 
         boolean debugMode = sharedPreferences.getBoolean("debug_mode", false);
@@ -147,6 +171,18 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    private void updateUI() {
+        MenuItem item = menu.findItem(R.id.bluetoothItem);
+        item.setIcon(R.drawable.ic_baseline_bluetooth_connected_24);
+
+
+        bt.animate().alpha(1f).setDuration(2000);
+        disconnect.setEnabled(true);
+        //form.setEnabled(true);
+        sensors.setEnabled(true);
+        connectBT.setEnabled(false);
     }
 
     /*
@@ -198,8 +234,8 @@ public class MainActivity extends AppCompatActivity {
                 if (AppBase.INSTANCE.isBluetoothConnected) {
                     intent = new Intent(this, Terminal.class);
                     startActivity(intent);
-                }else{
-                    Toast.makeText(this,"You should \n connect to Bluetooth first!",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "You should \n connect to Bluetooth first!", Toast.LENGTH_SHORT).show();
                 }
                 return true;
             case R.id.MakeCodeItem:
@@ -216,6 +252,10 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.settingsItem:
                 intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.HelpingItem:
+                intent = new Intent(this, HelpingActivity.class);
                 startActivity(intent);
                 return true;
             default:

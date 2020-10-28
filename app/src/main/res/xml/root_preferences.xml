@@ -18,8 +18,8 @@
     <PreferenceCategory app:title="@string/bluetooth">
 
         <SwitchPreferenceCompat
-            app:key="bluetooth"
-            app:enabled="false"
+            app:key="rememberLastBTDevice"
+            app:enabled="true"
             app:title="@string/keep_old_bt_device" />
 
 
@@ -29,7 +29,7 @@
 
         <SwitchPreferenceCompat
             app:key="debug_mode"
-            app:defaultValue="true"
+            app:defaultValue="false"
             app:enabled="true"
             app:title="@string/show_debug_options" />
 

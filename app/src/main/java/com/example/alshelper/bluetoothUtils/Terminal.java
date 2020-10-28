@@ -80,6 +80,7 @@ public class Terminal extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         unregisterReceiver(receiver);
+        AppBase.INSTANCE.bluetoothConnector.stopReadingData();
     }
 
 }

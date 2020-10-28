@@ -32,6 +32,11 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/HelpingItem"
+        android:icon="@drawable/ic_baseline_add_ic_call_24"
+        android:title="HelpingSys" />
+
+    <item
         android:id="@+id/aboutItem"
         android:icon="@drawable/about"
         android:title="About" />

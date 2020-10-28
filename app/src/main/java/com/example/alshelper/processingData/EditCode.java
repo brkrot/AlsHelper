@@ -29,43 +29,49 @@ import com.example.alshelper.R;
 
 public class EditCode extends AppCompatActivity {
 
-    String outputFileName;
-    File outputArduinoFile;
-    String textContent;
-    EditText mEditText;
-    Map<String, String> allPossibleActions;
-    ArrayList allChosenActions;
-    String patientName = "", chosenSensor = "";
+    private String outputFileName;
+    private File outputArduinoFile;
+    private String textContent;
+    private EditText mEditText;
+    private Map<String, String> allPossibleActions;
+    private ArrayList allChosenActions;
+    private String patientName = "", chosenSensor = "";
+    private int numberOfActions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_edit_code);
-        SharedPreferences prefs = getSharedPreferences(
-                getPackageName() + "_preferences", Context.MODE_PRIVATE);
+        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
         boolean debugMode = prefs.getBoolean("debug_mode", false);
 
-
+        /*Getting the info from the caller intent*/
         Intent in;
         in = getIntent();
-
         chosenSensor = in.getStringExtra("CHOSEN_SENSOR");
         allChosenActions = (ArrayList<String>) in.getStringArrayListExtra(getString(R.string.chosen_action_for_arduino));
         patientName = in.getStringExtra("PATIENT_NAME");
+        numberOfActions = in.getIntExtra("NUMBER_OF_ACTIONS", 1);
+
         outputFileName = patientName + "'s_Personal_Code_" + chosenSensor + ".ino";
         textContent = "";
         mEditText = findViewById(R.id.edit_text);
 
         /*Setting a dictionary ,each codeword equal to some code in arduino*/
         allPossibleActions = new HashMap<>();
+
+        //Getting the actions names
         String[] helpingSystemActionsNames = getResources().getStringArray(R.array.helpingSystemActions);
+
+        //getting the actions codes
         String[] helpingSystemActionsCodes = getResources().getStringArray((R.array.helpingSystemActionsCodes));
+
         /*Combining the names and the actual code lines to call any action, as pairs in hashmap*/
         for (int i = 0; i < helpingSystemActionsNames.length; i++) {
             allPossibleActions.put(helpingSystemActionsNames[i], helpingSystemActionsCodes[i]);
         }
-
+        /* Do this "Shortcut" when we are not in debugging mode */
         if (!debugMode) {
             View v = new View(this);
             load(v);
@@ -113,25 +119,21 @@ public class EditCode extends AppCompatActivity {
 
         textContent = textContent.replace("#PATIENT_NAME", patientName);
 
-        if (chosenSensor.equals(getString(R.string.sensor_joystick))) {    //Joystick
-            String codeLine = "";
-            for (int i = 1; i <= 4; i++) {
-                /*Get the code line corresponding to the chosen action at [i-1]*/
-                codeLine = allPossibleActions.get(allChosenActions.get(i - 1));
-                textContent = textContent.replace("//$" + i, codeLine);
-            }
-            mEditText.setText(textContent);
-            Log.i("New File", textContent);
+        String codeLine = "";
+        for (int i = 1; i <= numberOfActions; i++) {
 
-            Toast.makeText(this, "The code was changed",
-                    Toast.LENGTH_LONG).show();
-        } else if (chosenSensor.equals(getString(R.string.sensor_potentiometer))) {
+            /*Get the action code line corresponding to the chosen action at [i-1]*/
+            /*example - the usewr chose "turn A/C, the corresponding actioc code is ="airCondition();" */
+            codeLine = allPossibleActions.get(allChosenActions.get(i - 1));
 
-        } else if (chosenSensor.equals(getString(R.string.sensor_button))) {
-
-        } else if (chosenSensor.equals(getString(R.string.sensor_name_magnet))) {
-
+            //Replace the code at the aimed place
+            textContent = textContent.replace("//$" + i, codeLine);
         }
+        mEditText.setText(textContent);
+        Log.i("New File", textContent);
+
+        Toast.makeText(this, "The code was changed", Toast.LENGTH_LONG).show();
+
     }
 
     public void save(View v) {
