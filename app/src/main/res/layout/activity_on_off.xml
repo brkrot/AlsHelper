@@ -38,6 +38,28 @@
             android:layout_margin="10dp"
             android:padding="10dp"/>
 
+        <Button
+            android:id="@+id/levelDown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/border"
+            android:onClick="changeLevel"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="LOWER LEVEL" />
+
+        <Button
+            android:id="@+id/levelUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/border"
+            android:onClick="changeLevel"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="UPER LEVEL" />
+
     </LinearLayout>
 
     <ImageView

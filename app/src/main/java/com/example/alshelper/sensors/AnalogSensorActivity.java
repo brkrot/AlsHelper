@@ -36,6 +36,12 @@ public class AnalogSensorActivity extends AppCompatActivity {
     private static Drawable draw3;//*7
     private static Drawable draw4;//*11
     private static Drawable current_draw;
+    private static View line1of3;
+    private static View line2of3;
+    private static View line1of4;
+    private static View line2of4;
+    private static View line3of4;
+
 
     static final int MIN_DELTA_SEC_ON_ONE_AREA = 2;
 
@@ -43,7 +49,7 @@ public class AnalogSensorActivity extends AppCompatActivity {
 
     static long tSecond = System.currentTimeMillis();
 
-    static int currentLevel = 2;
+    static int currentLevel = 1;
 
     static  boolean startIndication = false;
 
@@ -64,6 +70,29 @@ public class AnalogSensorActivity extends AppCompatActivity {
                 return;
             }
             Log.i("change level", "change level");
+            switch (currentLevel) {
+                case 1:
+                    line1of4.setVisibility(View.INVISIBLE);
+                    line2of4.setVisibility(View.VISIBLE);
+                    line3of4.setVisibility(View.INVISIBLE);
+                    line1of3.setVisibility(View.INVISIBLE);
+                    line2of3.setVisibility(View.INVISIBLE);
+                    break;
+                case 2:
+                    line1of4.setVisibility(View.INVISIBLE);
+                    line2of4.setVisibility(View.INVISIBLE);
+                    line3of4.setVisibility(View.INVISIBLE);
+                    line1of3.setVisibility(View.VISIBLE);
+                    line2of3.setVisibility(View.VISIBLE);
+                    break;
+                case 3:
+                    line1of4.setVisibility(View.VISIBLE);
+                    line2of4.setVisibility(View.VISIBLE);
+                    line3of4.setVisibility(View.VISIBLE);
+                    line1of3.setVisibility(View.INVISIBLE);
+                    line2of3.setVisibility(View.INVISIBLE);
+                    break;
+            }
         }
         else {
             Toast.makeText(getApplicationContext(),"Please press start before",Toast.LENGTH_SHORT).show();
@@ -96,6 +125,11 @@ public class AnalogSensorActivity extends AppCompatActivity {
             public void onClick(View v) {
                 vertical_progressbar = (ProgressBar) findViewById(R.id.vertical_progressbar);
                 vertical_status = (TextView) findViewById(R.id.verticalprogress_percentage);
+                line1of3 = (View) findViewById(R.id.line1of3);
+                line2of3 = (View) findViewById(R.id.line2of3);
+                line1of4 = (View) findViewById(R.id.line1of4);
+                line2of4 = (View) findViewById(R.id.line2of4);
+                line3of4 = (View) findViewById(R.id.line3of4);
                 draw = getApplicationContext().getResources().getDrawable(R.drawable.vertical_progressbar);
                 draw2 = getApplicationContext().getResources().getDrawable(R.drawable.vertical_progressbar2);
                 draw3 = getApplicationContext().getResources().getDrawable(R.drawable.vertical_progressbar3);

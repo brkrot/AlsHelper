@@ -131,6 +131,20 @@
         app:layout_constraintGuide_percent="0.575" />
 
     <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1of3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6666666666" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2of3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4833333333333" />
+
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1of4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -145,10 +159,31 @@
         app:layout_constraintGuide_percent="0.4375" />
 
     <View
+        android:id="@+id/line1of3"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        android:background="@android:color/black"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@id/guideline5"
+        app:layout_constraintStart_toStartOf="@id/guideline4"
+        app:layout_constraintTop_toBottomOf="@id/guideline1of3" />
+
+    <View
+        android:id="@+id/line2of3"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        android:background="@android:color/black"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@id/guideline5"
+        app:layout_constraintStart_toStartOf="@id/guideline4"
+        app:layout_constraintTop_toBottomOf="@id/guideline2of3" />
+
+    <View
         android:id="@+id/line1of4"
         android:layout_width="0dp"
         android:layout_height="4dp"
         android:background="@android:color/black"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@id/guideline5"
         app:layout_constraintStart_toStartOf="@id/guideline4"
         app:layout_constraintTop_toBottomOf="@id/guideline1of4" />
@@ -158,6 +193,7 @@
         android:layout_width="0dp"
         android:layout_height="4dp"
         android:background="@android:color/black"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@id/guideline5"
         app:layout_constraintStart_toStartOf="@id/guideline4"
         app:layout_constraintTop_toBottomOf="@id/guideline2of4" />
@@ -166,6 +202,7 @@
         android:layout_width="0dp"
         android:layout_height="4dp"
         android:background="@android:color/black"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@id/guideline5"
         app:layout_constraintStart_toStartOf="@id/guideline4"
         app:layout_constraintTop_toBottomOf="@id/guideline3of4" />
