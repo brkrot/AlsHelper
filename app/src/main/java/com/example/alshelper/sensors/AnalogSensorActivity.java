@@ -55,7 +55,7 @@ public class AnalogSensorActivity extends AppCompatActivity {
 
     static  boolean colorChanged = false;
 
-    static  int[] DataCollector = new int[]{1,1,1} ;
+    static  int[] DataCollector = new int[]{1,1,1,1} ;
 
     public void changeLevel(View view)
     {
@@ -134,11 +134,32 @@ public class AnalogSensorActivity extends AppCompatActivity {
                 draw2 = getApplicationContext().getResources().getDrawable(R.drawable.vertical_progressbar2);
                 draw3 = getApplicationContext().getResources().getDrawable(R.drawable.vertical_progressbar3);
                 draw4 = getApplicationContext().getResources().getDrawable(R.drawable.vertical_progressbar4);
+                draw.setAlpha(252);
+                draw2.setAlpha(253);
+                draw3.setAlpha(254);
+                draw4.setAlpha(255);
                 startIndication = true;
                 AppBase.INSTANCE.bluetoothConnector.writeToArduino("S3");
                 AppBase.INSTANCE.bluetoothConnector.readDataRepeating();
             }
         });
+    }
+
+    protected void onStop(Bundle savedInstanceState) {
+        super.onStop();
+        for (int i=1;i<4;i++){
+            switch (i){
+                case(1):
+                    AppBase.INSTANCE.diagnosticData.dataMap.put("separate range to 2 ability", DataCollector[i]);
+                    break;
+                case(2):
+                    AppBase.INSTANCE.diagnosticData.dataMap.put("separate range to 3 ability", DataCollector[i]);
+                    break;
+                case(3):
+                    AppBase.INSTANCE.diagnosticData.dataMap.put("separate range to 4 ability", DataCollector[i]);
+                    break;
+            }
+        }
     }
 
     private void drawOnUi(String data){
@@ -175,18 +196,18 @@ public class AnalogSensorActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"GOOOOD!",Toast.LENGTH_SHORT).show();
                 colorChanged = false;
                 current_draw = vertical_progressbar.getProgressDrawable();
-                Log.i("the currentdraw is: ", current_draw.toString());
-                switch (current_draw.toString()){
-                    case ("draw")://TODO extract the tag/string of each color
+                Log.i("the currentdraw is: ", String.valueOf(current_draw.getAlpha()));
+                switch (current_draw.getAlpha()){
+                    case (252):
                         update_data_per_color(3);
                         break;
-                    case ("draw2"):
+                    case (253):
                         update_data_per_color(5);
                         break;
-                    case ("draw3"):
+                    case (254):
                         update_data_per_color(7);
                         break;
-                    case ("draw4"):
+                    case (255):
                         update_data_per_color(11);
                         break;
                 }
