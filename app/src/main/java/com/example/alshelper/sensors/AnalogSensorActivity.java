@@ -145,22 +145,32 @@ public class AnalogSensorActivity extends AppCompatActivity {
         });
     }
 
-    protected void onStop(Bundle savedInstanceState) {
-        super.onStop();
+    @Override
+    protected void onPause() {
+        super.onPause();
         for (int i=1;i<4;i++){
+            System.out.println(DataCollector[i]);
             switch (i){
                 case(1):
-                    AppBase.INSTANCE.diagnosticData.dataMap.put("separate range to 2 ability", DataCollector[i]);
+                    if(DataCollector[i] == 3*5) {
+                        AppBase.INSTANCE.diagnosticData.dataMap.put("ANALOG separate range to 2 ability", 1);
+                    }
                     break;
                 case(2):
-                    AppBase.INSTANCE.diagnosticData.dataMap.put("separate range to 3 ability", DataCollector[i]);
+                    if(DataCollector[i] == 3*5*7) {
+                        AppBase.INSTANCE.diagnosticData.dataMap.put("ANALOG separate range to 3 ability", 1);
+                    }
                     break;
                 case(3):
-                    AppBase.INSTANCE.diagnosticData.dataMap.put("separate range to 4 ability", DataCollector[i]);
+                    if(DataCollector[i] == 3*5*7*11) {
+                        AppBase.INSTANCE.diagnosticData.dataMap.put("ANALOG separate range to 4 ability", 1);
+                    }
                     break;
             }
         }
+        unregisterReceiver(receiver);
     }
+
 
     private void drawOnUi(String data){
         try{
@@ -199,9 +209,11 @@ public class AnalogSensorActivity extends AppCompatActivity {
                 Log.i("the currentdraw is: ", String.valueOf(current_draw.getAlpha()));
                 switch (current_draw.getAlpha()){
                     case (252):
+                        System.out.println("252!!!");
                         update_data_per_color(3);
                         break;
                     case (253):
+                        System.out.println("253!!!");
                         update_data_per_color(5);
                         break;
                     case (254):
@@ -218,7 +230,7 @@ public class AnalogSensorActivity extends AppCompatActivity {
     }
 
     private void update_data_per_color(int colorNumber) {
-        if(DataCollector[currentLevel] % colorNumber == 0){
+        if(DataCollector[currentLevel] % colorNumber != 0){
             DataCollector[currentLevel] =  DataCollector[currentLevel]*colorNumber;
         }
     }

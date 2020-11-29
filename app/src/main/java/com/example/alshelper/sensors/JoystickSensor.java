@@ -312,25 +312,26 @@ public class JoystickSensor extends AppCompatActivity {
         });
     }
 
-
-    protected void onStop(Bundle savedInstanceState) {
-        super.onStop();
+    @Override
+    protected void onPause() {
+        super.onPause();
         for (int i=1;i<5;i++){
             switch (i){
                 case(1):
-                    AppBase.INSTANCE.diagnosticData.dataMap.put("combine vertical and horizonal ability", DataCollector[i]);
+                    AppBase.INSTANCE.diagnosticData.dataMap.put("JOYSTICK combine vertical and horizonal ability", DataCollector[i]);
                     break;
                 case(2):
-                    AppBase.INSTANCE.diagnosticData.dataMap.put("vertical ability", DataCollector[i]);
+                    AppBase.INSTANCE.diagnosticData.dataMap.put("JOYSTICK vertical ability", DataCollector[i]);
                     break;
                 case(3):
-                    AppBase.INSTANCE.diagnosticData.dataMap.put("horizonal ability", DataCollector[i]);
+                    AppBase.INSTANCE.diagnosticData.dataMap.put("JOYSTICK horizonal ability", DataCollector[i]);
                     break;
                 case(4):
-                    AppBase.INSTANCE.diagnosticData.dataMap.put("Two clicks ability", DataCollector[i]);
+                    AppBase.INSTANCE.diagnosticData.dataMap.put("JOYSTICK Two clicks ability", DataCollector[i]);
                     break;
             }
         }
+        unregisterReceiver(receiver);
     }
 
     private void drawOnUi(String data){

@@ -101,6 +101,14 @@ public class OnOffSensorActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AppBase.INSTANCE.diagnosticData.dataMap.put("ONOFF press ability", DataCollector[0]);
+        AppBase.INSTANCE.diagnosticData.dataMap.put("ONOFF Two clicks ability", DataCollector[1]);
+        unregisterReceiver(receiver);
+    }
+
     private void drawOnUi(String data){
         try{
             String[] extractData = data.split("#");
