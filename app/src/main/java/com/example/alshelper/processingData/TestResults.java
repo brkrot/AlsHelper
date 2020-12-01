@@ -47,12 +47,12 @@ public class TestResults extends AppCompatActivity {
                     break;
         }
     }
-
-    public void createHelpingSystem (View v){
-        Intent intent = new Intent(this, Form.class);
-        startActivity(intent);
-    }
 }
+
+   // public void createHelpingSystem (View v){
+    //    Intent intent = new Intent(this, Form.class);
+   //     startActivity(intent);
+  //  }
 
     private void present_joystick_ability(String ability, Integer value) {
         if (value != 0){
@@ -61,8 +61,10 @@ public class TestResults extends AppCompatActivity {
         }
     }
     private void present_analog_ability(String ability, Integer value) {
-        if (value != 0) {
-            analogSumOfActions += 1;
+        String level[] = ability.split(" ");
+        System.out.println("num of areas" + level[3]);
+        if (value != 0 & analogSumOfActions<(Integer.valueOf(level[3]))) {
+            analogSumOfActions = ((Integer.valueOf(level[3])) -1);
             analogTestVal.setText(analogSumOfActions.toString());
         }
     }
