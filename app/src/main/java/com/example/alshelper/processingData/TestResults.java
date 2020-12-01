@@ -59,9 +59,11 @@ public class TestResults extends AppCompatActivity {
         startActivity(intent);
     }
     private void present_joystick_ability(String ability, Integer value) {
-        if (value != 0){
-            joystickSumOfActions += 1;
-            JoystickTestVal.setText((joystickSumOfActions).toString());
+        String level[] = ability.split(" ");
+        System.out.println("num of areas" + level[3]);
+        if (value != 0 & analogSumOfActions<(Integer.valueOf(level[3]))) {
+            analogSumOfActions = ((Integer.valueOf(level[3])) -1);
+            analogTestVal.setText(analogSumOfActions.toString());
         }
     }
     private void present_analog_ability(String ability, Integer value) {
