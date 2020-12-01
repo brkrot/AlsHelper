@@ -50,12 +50,14 @@ public class TestResults extends AppCompatActivity {
         }
     }
 
-    /*public void createHelpingSystem(View v){
-        Intent intent = new Intent(this, Form.class);
-        startActivity(intent);
-    }*/
+
 }
 
+
+    public void createHelpingSystem(View v){
+        Intent intent = new Intent(this, Form.class);
+        startActivity(intent);
+    }
     private void present_joystick_ability(String ability, Integer value) {
         if (value != 0){
             joystickSumOfActions += 1;
