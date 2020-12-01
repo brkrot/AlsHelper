@@ -54,7 +54,7 @@ public class EditCode extends AppCompatActivity {
         patientName = in.getStringExtra("PATIENT_NAME");
         numberOfActions = in.getIntExtra("NUMBER_OF_ACTIONS", 1);
 
-        outputFileName = patientName + "'s_Personal_Code_" + chosenSensor + ".ino";
+        outputFileName = patientName + "_Personal_Code_" + chosenSensor + ".ino";
         textContent = "";
         mEditText = findViewById(R.id.edit_text);
 
@@ -117,13 +117,14 @@ public class EditCode extends AppCompatActivity {
 
     public void replace(View v) {
 
+        //Replace the generic name with the patient name
         textContent = textContent.replace("#PATIENT_NAME", patientName);
 
         String codeLine = "";
         for (int i = 1; i <= numberOfActions; i++) {
 
             /*Get the action code line corresponding to the chosen action at [i-1]*/
-            /*example - the usewr chose "turn A/C, the corresponding actioc code is ="airCondition();" */
+            /*example - the user chose "turn A/C, the corresponding action code is ="airCondition();" */
             codeLine = allPossibleActions.get(allChosenActions.get(i - 1));
 
             //Replace the code at the aimed place

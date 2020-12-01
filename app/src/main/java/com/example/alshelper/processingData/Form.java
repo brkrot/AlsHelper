@@ -190,7 +190,7 @@ seperator.set
         }
 
         for (int i = 0; i < numberOfActions; i++) {
-            option = allSpinners[0].getSelectedItem().toString();
+            option = allSpinners[i].getSelectedItem().toString();
             ArduinoCodeData.add(option);
         }
 
