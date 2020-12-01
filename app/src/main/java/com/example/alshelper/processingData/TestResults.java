@@ -2,8 +2,10 @@ package com.example.alshelper.processingData;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.Map;
@@ -48,10 +50,10 @@ public class TestResults extends AppCompatActivity {
         }
     }
 
-    public void createHelpingSystem (View v){
+    /*public void createHelpingSystem(View v){
         Intent intent = new Intent(this, Form.class);
         startActivity(intent);
-    }
+    }*/
 }
 
     private void present_joystick_ability(String ability, Integer value) {
